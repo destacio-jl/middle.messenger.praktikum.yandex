@@ -1,0 +1,59 @@
+---
+name: "Регистрация"
+fields:
+  - type: "email"
+    label: "Почта"
+    name: "email"
+  - type: "text"
+    label: "Логин"
+    name: "login"
+  - type: "text"
+    label: "Имя"
+    name: "first_name"
+  - type: "text"
+    label: "Фамилия"
+    name: "second_name"
+  - type: "text"
+    label: "Телефон"
+    name: "phone"
+  - type: "password"
+    label: "Пароль"
+    name: "password"
+  - type: "password"
+    label: "Пароль (ещё раз)"
+    name: "password_second"
+action: "Зарегистрироваться"
+link:
+  text: "Войти"
+  href: "#"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="../../styles/auth.scss">
+</head>
+<body>
+  <div class="auth">
+    <div class="auth__content">
+      <h2 class="auth__title">{{ name }}</h2>
+      <form class="auth__form">
+        {{#each fields}}
+          <div class="auth__field">
+            <input id="{{name}}" name={{name}} type="{{type}}" placeholder=" ">
+            <label for="{{name}}">{{label}}</label>
+          </div>
+          {{#if errorText}}
+            <p class="auth__error">{{errorText}}</p>
+          {{/if}}
+        {{/each}}
+      </form>
+      <button class="auth__action">{{action}}</button>
+      <a class="auth__link" href="{{link.href}}">{{link.text}}</a>
+    </div>
+  </div>
+</body>
+</html>
