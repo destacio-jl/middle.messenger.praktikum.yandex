@@ -37,7 +37,7 @@ fields:
 <body>
   <div class="profile">
     <div class="profile__nav">
-      <button class="profile__back" />
+      <a href="/main" class="profile__back" />
     </div>
     <div class="profile__content">
       <form class="profile__form">
@@ -54,9 +54,9 @@ fields:
         {{/each}}
       </form>
       <div class="profile__actions">
-        <a href="#" class="profile__action">Изменить данные</a>
-        <a href="#" class="profile__action">Изменить пароль</a>
-        <a href="#" class="profile__action profile__action_danger">Выйти</a>
+        <a href="/change-profile" class="profile__action">Изменить данные</a>
+        <a href="/change-password" class="profile__action">Изменить пароль</a>
+        <a href="/login" class="profile__action profile__action_danger">Выйти</a>
       </div>
     </div>
   </div>

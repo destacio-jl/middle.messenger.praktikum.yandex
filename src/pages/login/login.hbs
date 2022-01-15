@@ -8,10 +8,12 @@ fields:
   - type: "password"
     label: "Пароль"
     name: "password"
-action: "Авторизоваться"
+action:
+  text: "Авторизоваться"
+  href: "/main"
 link:
   text: "Нет аккаунта?"
-  href: "#"
+  href: "/signin"
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +39,7 @@ link:
           {{/if}}
         {{/each}}
       </form>
-      <button class="auth__action">{{action}}</button>
+      <a class="auth__action" href="{{action.href}}">{{action.text}}</a>
       <a class="auth__link" href="{{link.href}}">{{link.text}}</a>
     </div>
   </div>

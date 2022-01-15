@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "targets": {
+    "main": false
+  },
   "scripts": {
-    "dev": "parcel ./src/pages/errorPages/404.hbs",
-    "build": "parcel build index.hbs"
+    "dev": "parcel ./src/pages/main/main.hbs",
+    "build": "parcel build ./src/pages/errorPages/*.hbs ./src/pages/login/*.hbs ./src/pages/main/*.hbs ./src/pages/profile/*.hbs ./src/pages/signin/*.hbs"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +16,7 @@
   "devDependencies": {
     "@anikin/parcel-transformer-handlebars": "^1.0.9",
     "@parcel/transformer-sass": "^2.1.1",
+    "express": "^4.17.2",
     "parcel": "^2.1.1"
   }
 }
