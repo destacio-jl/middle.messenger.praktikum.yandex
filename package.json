@@ -7,6 +7,7 @@
     "main": false
   },
   "scripts": {
+    "start": "node ./server.js",
     "dev": "parcel ./src/pages/main/main.hbs",
     "build": "parcel build ./src/pages/errorPages/*.hbs ./src/pages/login/*.hbs ./src/pages/main/*.hbs ./src/pages/profile/*.hbs ./src/pages/signin/*.hbs"
   },
@@ -18,5 +19,8 @@
     "@parcel/transformer-sass": "^2.1.1",
     "express": "^4.17.2",
     "parcel": "^2.1.1"
+  },
+  "engines": {
+    "node": ">=12"
   }
 }

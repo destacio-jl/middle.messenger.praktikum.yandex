@@ -33,7 +33,7 @@ const routes = [
 ]
 
 const app = express();
-const port = 4000;
+const port = 3000;
 
 const filesDirectory = `${__dirname}/dist`;
 app.use(express.static(path.join(__dirname, 'dist')));
