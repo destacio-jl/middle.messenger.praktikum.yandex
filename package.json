@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node ./server.js",
     "dev": "parcel ./src/pages/main/main.hbs",
-    "build": "parcel build ./index.hbs ./src/pages/errorPages/*.hbs ./src/pages/login/*.hbs ./src/pages/main/*.hbs ./src/pages/profile/*.hbs ./src/pages/signin/*.hbs"
+    "build": "parcel build ./src/index.hbs ./src/pages/errorPages/*.hbs ./src/pages/login/*.hbs ./src/pages/main/*.hbs ./src/pages/profile/*.hbs ./src/pages/signin/*.hbs"
   },
   "keywords": [],
   "author": "",
