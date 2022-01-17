@@ -1,4 +1,5 @@
-@import url("./reset.scss");
+@import "./variables.scss";
+@import "./reset.scss";
 
 html,
 body {
@@ -29,7 +30,7 @@ body {
 
 .auth__title {
   margin-bottom: 40px;
-  color: #1e1e1e;
+  color: $color-text-main;
   font-size: 20px;
   font-weight: 500;
   text-align: center;
@@ -38,12 +39,12 @@ body {
 .auth__field {
   position: relative;
   margin-bottom: 16px;
-  border-bottom: 1px solid #3369f3;
+  border-bottom: 1px solid $color-accent;
 
   input {
     padding-top: 16px;
     padding-bottom: 6px;
-    color: #1e1e1e;
+    color: $color-text-main;
     font-size: 13px;
     border: 0;
     outline: 0;
@@ -54,7 +55,7 @@ body {
     position: absolute;
     left: 0;
     bottom: 7px;
-    color: #999999;
+    color: $color-text-light;
     font-size: 13px;
     pointer-events: none;
     transition: all 0.2s ease-in;
@@ -70,7 +71,7 @@ body {
 .auth__error {
   margin-top: -10px;
   font-size: 10px;
-  color: #ff2f2f;
+  color: $color-error;
 }
 
 .auth__action {
@@ -81,8 +82,8 @@ body {
   height: 37px;
   line-height: 37px;
   text-align: center;
-  background: #3369f3;
-  color: white;
+  background: $color-accent;
+  color: $color-white;
   font-size: 13px;
   border: 0;
   border-radius: 8px;
@@ -92,7 +93,7 @@ body {
 
 .auth__link {
   display: block;
-  color: #3369f3;
+  color: $color-accent;
   font-size: 11px;
   text-align: center;
 }
