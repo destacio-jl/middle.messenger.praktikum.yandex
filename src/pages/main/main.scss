@@ -1,4 +1,5 @@
-@import url("../../styles/reset.scss");
+@import "../../styles/variables.scss";
+@import "../../styles/reset.scss";
 
 .main {
   display: flex;
@@ -10,7 +11,7 @@
   padding: 20px 10px 10px;
   width: 310px;
   min-width: 310px;
-  border-right: 1px solid #eaeaea;
+  border-right: 1px solid $color-border-light;
   max-height: 100%;
   overflow: auto;
 }
@@ -25,7 +26,7 @@
   align-self: flex-end;
   font-weight: 500;
   font-size: 12px;
-  color: #999999;
+  color: $color-text-light;
 }
 
 .chats__search {
@@ -34,8 +35,8 @@
   width: 100%;
   height: 32px;
   border-radius: 5px;
-  background: #efefef;
-  color: #999999;
+  background: $color-background;
+  color: $color-text-light;
   border: 0;
   outline: none;
 }
@@ -44,7 +45,7 @@
   position: relative;
   display: flex;
   padding: 12px 23px 12px 0;
-  border-top: 1px solid #eaeaea;
+  border-top: 1px solid $color-border-light;
   cursor: pointer;
 }
 
@@ -54,7 +55,7 @@
   height: 47px;
   margin-right: 10px;
   border-radius: 50%;
-  background: #efefef;
+  background: $color-background;
 
   img {
     width: 100%;
@@ -65,14 +66,14 @@
   margin-bottom: 4px;
   font-weight: 600;
   font-size: 13px;
-  color: #1e1e1e;
+  color: $color-text-main;
 }
 
 .chat-list__last {
   font-weight: 500;
   font-size: 12px;
   line-height: 15px;
-  color: #999999;
+  color: $color-text-light;
   max-height: 30px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -83,7 +84,7 @@
   top: 12px;
   right: 0;
   font-size: 9px;
-  color: #999999;
+  color: $color-text-light;
 }
 
 .chat-list__unread {
@@ -93,8 +94,8 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: #3369f3;
-  color: white;
+  background-color: $color-accent;
+  color: $color-white;
   font-size: 11px;
   font-weight: 500;
   text-align: center;
@@ -103,7 +104,7 @@
 
 .chat-list__you {
   font-weight: bold;
-  color: #1e1e1e;
+  color: $color-text-main;
 }
 
 .chat {
@@ -117,7 +118,7 @@
   padding-bottom: 10px;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid $color-border-light;
 }
 
 .chat__info {
@@ -129,12 +130,12 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background-color: #efefef;
+  background-color: $color-background;
   margin-right: 10px;
 }
 
 .chat__name {
-  color: #1e1e1e;
+  color: $color-text-main;
   font-weight: 600;
   font-size: 13px;
 }
@@ -151,7 +152,7 @@
     width: 3px;
     height: 3px;
     border-radius: 50%;
-    background-color: #1e1e1e;
+    background-color: $color-text-main;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -163,7 +164,7 @@
     width: 3px;
     height: 3px;
     border-radius: 50%;
-    background-color: #1e1e1e;
+    background-color: $color-text-main;
     top: -6px;
     left: 0;
   }
@@ -174,7 +175,7 @@
     width: 3px;
     height: 3px;
     border-radius: 50%;
-    background-color: #1e1e1e;
+    background-color: $color-text-main;
     top: 6px;
     left: 0;
   }
@@ -191,7 +192,7 @@
 .chat__date {
   margin: 30px 0;
   text-align: center;
-  color: #999999;
+  color: $color-text-light;
   font-size: 12px;
 }
 
@@ -203,15 +204,15 @@
   border-radius: 12px;
   font-size: 12px;
   line-height: 15px;
-  color: #1e1e1e;
-  background-color: #f8f8f8;
+  color: $color-text-main;
+  background-color: $color-background-light;
 
   &_own {
     align-self: flex-end;
-    background-color: #e4edfd;
+    background-color: $color-background-accent;
 
     .chat__message-time {
-      color: #3369f3;
+      color: $color-accent;
     }
   }
 }
@@ -231,14 +232,14 @@
   right: 10px;
   margin-left: 28px;
   display: block;
-  color: #999999;
+  color: $color-text-light;
   font-size: 9px;
 }
 
 .chat__footer {
   display: flex;
   padding-top: 10px;
-  border-top: 1px solid #eaeaea;
+  border-top: 1px solid $color-border-light;
   align-items: center;
   justify-self: end;
 }
@@ -248,10 +249,10 @@
   flex: 1;
   height: 32px;
   line-height: 32px;
-  background-color: #efefef;
+  background-color: $color-background;
   border-radius: 30px;
   padding: 0 20px;
-  color: #999999;
+  color: $color-text-light;
   font-size: 12px;
   border: 0;
   outline: none;
@@ -263,7 +264,7 @@
   border-radius: 50%;
   border: 0;
   outline: none;
-  background-color: #3369f3;
+  background-color: $color-accent;
   background-image: url("../../images/arrow-right.svg");
   background-repeat: no-repeat;
   background-position: center;
