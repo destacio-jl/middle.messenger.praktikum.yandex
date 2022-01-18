@@ -1,0 +1,47 @@
+---
+name: "Вход"
+fields:
+  - type: "text"
+    label: "Логин"
+    name: "login"
+    errorText: "Неверный логин"
+  - type: "password"
+    label: "Пароль"
+    name: "password"
+action:
+  text: "Авторизоваться"
+  href: "/main"
+link:
+  text: "Нет аккаунта?"
+  href: "/signin"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="../../styles/auth.scss">
+</head>
+<body>
+  <div class="auth">
+    <div class="auth__content">
+      <h2 class="auth__title">{{ name }}</h2>
+      <form class="auth__form">
+        {{#each fields}}
+          <div class="auth__field">
+            <input id="{{name}}" name={{name}} type="{{type}}" placeholder=" ">
+            <label for="{{name}}">{{label}}</label>
+          </div>
+          {{#if errorText}}
+            <p class="auth__error">{{errorText}}</p>
+          {{/if}}
+        {{/each}}
+      </form>
+      <a class="auth__action" href="{{action.href}}">{{action.text}}</a>
+      <a class="auth__link" href="{{link.href}}">{{link.text}}</a>
+    </div>
+  </div>
+</body>
+</html>
