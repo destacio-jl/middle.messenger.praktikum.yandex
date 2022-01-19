@@ -1,5 +1,5 @@
-@import "../../styles/variables.scss";
-@import "../../styles/reset.scss";
+@import "../../styles/variables";
+@import "../../styles/reset";
 
 .main {
   display: flex;
@@ -196,6 +196,16 @@
   font-size: 12px;
 }
 
+.chat__message-time {
+  position: absolute;
+  bottom: 7px;
+  right: 10px;
+  margin-left: 28px;
+  display: block;
+  color: $color-text-light;
+  font-size: 9px;
+}
+
 .chat__message {
   position: relative;
   margin-bottom: 10px;
@@ -224,16 +234,6 @@
 
 .chat__message:last-child {
   margin-bottom: 0;
-}
-
-.chat__message-time {
-  position: absolute;
-  bottom: 7px;
-  right: 10px;
-  margin-left: 28px;
-  display: block;
-  color: $color-text-light;
-  font-size: 9px;
 }
 
 .chat__footer {

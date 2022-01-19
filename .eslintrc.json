@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "airbnb-base/legacy",
+    "plugin:prettier/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["html", "hbs", "@typescript-eslint", "prettier"]
+}

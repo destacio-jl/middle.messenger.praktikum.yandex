@@ -8,8 +8,10 @@
   },
   "scripts": {
     "start": "node ./server.js",
-    "dev": "parcel ./src/pages/main/main.hbs",
-    "build": "parcel build ./src/pages/errorPages/*.hbs ./src/pages/login/*.hbs ./src/pages/main/*.hbs ./src/pages/profile/*.hbs ./src/pages/signin/*.hbs"
+    "dev": "parcel ./src/index.html",
+    "build": "parcel build ./src/pages/errorPages/*.hbs ./src/pages/login/*.hbs ./src/pages/main/*.hbs ./src/pages/profile/*.hbs ./src/pages/signin/*.hbs",
+    "lint": "eslint src --ext .html,.hbs,.ts",
+    "stylelint": "stylelint src/**/*.scss"
   },
   "keywords": [],
   "author": "",
@@ -17,8 +19,26 @@
   "devDependencies": {
     "@anikin/parcel-transformer-handlebars": "^1.0.9",
     "@parcel/transformer-sass": "^2.1.1",
+    "@typescript-eslint/eslint-plugin": "^5.10.0",
+    "@typescript-eslint/parser": "^5.10.0",
+    "eslint": "^8.7.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-hbs": "^1.0.3",
+    "eslint-plugin-html": "^6.2.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.28.0",
     "express": "^4.17.2",
-    "parcel": "^2.1.1"
+    "parcel": "^2.1.1",
+    "prettier": "^2.5.1",
+    "stylelint": "^14.2.0",
+    "stylelint-config-standard": "^24.0.0",
+    "stylelint-config-standard-scss": "^3.0.0",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
   },
   "engines": {
     "node": ">=12"

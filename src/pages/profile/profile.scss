@@ -1,5 +1,5 @@
-@import "../../styles/variables.scss";
-@import "../../styles/reset.scss";
+@import "../../styles/variables";
+@import "../../styles/reset";
 
 .profile {
   display: flex;
@@ -63,10 +63,6 @@
   }
 }
 
-.profile__avatar:hover::before {
-  opacity: 1;
-}
-
 .profile__avatar::before {
   content: "Поменять аватар";
   display: flex;
@@ -80,10 +76,14 @@
   color: $color-white;
   font-size: 13px;
   line-height: 14px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgb(0 0 0 / 50%);
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
   pointer-events: none;
+}
+
+.profile__avatar:hover::before {
+  opacity: 1;
 }
 
 .profile__name {
