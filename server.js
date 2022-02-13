@@ -6,7 +6,7 @@ const PORT = 3000;
 const app = express();
 const port = process.env.PORT || PORT;
 
-const filesDirectory = `${__dirname}/dist`;
+const filesDirectory = `${__dirname}/dist/pages`;
 app.use(express.static(path.join(__dirname, "dist")));
 
 app.use(function (req, res, next) {
