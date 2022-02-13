@@ -1,0 +1,9 @@
+<label>
+  <span>{{label}}</span>
+  <input name={{name}} type="{{type}}" value="{{value}}" {{disabled}} />
+</label>
+{{#if showErrors}}
+  {{#if errorText}}
+    <p class="profile__error">{{errorText}}</p>
+  {{/if}}
+{{/if}}
