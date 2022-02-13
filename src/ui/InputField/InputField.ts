@@ -2,11 +2,19 @@ import Block, { BlockSettings } from "../../core/block";
 import { compile } from "handlebars";
 import inputFieldTemplate from "./InputField.hbs";
 import profileFieldTemplate from "./ProfileField.hbs";
+import roundedFieldTemplate from "./RoundedInput.hbs";
 import { InputFieldProps, INPUT_FIELD_VARIANTS } from "./types";
 
 const TEMPLATES = {
   [INPUT_FIELD_VARIANTS.AUTH]: inputFieldTemplate,
   [INPUT_FIELD_VARIANTS.PROFILE]: profileFieldTemplate,
+  [INPUT_FIELD_VARIANTS.ROUNDED]: roundedFieldTemplate,
+};
+
+const CLASSES = {
+  [INPUT_FIELD_VARIANTS.AUTH]: ``,
+  [INPUT_FIELD_VARIANTS.PROFILE]: `profile__field`,
+  [INPUT_FIELD_VARIANTS.ROUNDED]: `chat__input`,
 };
 
 class InputField extends Block {
@@ -16,8 +24,15 @@ class InputField extends Block {
     return null;
   }
 
-  constructor(props: InputFieldProps, settings: BlockSettings) {
-    const { value, disabled, variant, validators } = props;
+  constructor(props: InputFieldProps, settings?: BlockSettings) {
+    const {
+      value,
+      disabled,
+      variant,
+      validators,
+      type,
+      showErrors = true,
+    } = props;
 
     const validateAndShowError = () => {
       if (!validators) return;
@@ -45,14 +60,15 @@ class InputField extends Block {
         value: value || ``,
         disabled: disabled ? `disabled` : ``,
         variant: variant || INPUT_FIELD_VARIANTS.AUTH,
+        type: type || "text",
         events: {
           blur: validateAndShowError,
         },
+        showErrors,
       },
       {
         ...settings,
-        className:
-          variant === INPUT_FIELD_VARIANTS.PROFILE ? `profile__field` : ``,
+        className: CLASSES[variant],
       }
     );
 

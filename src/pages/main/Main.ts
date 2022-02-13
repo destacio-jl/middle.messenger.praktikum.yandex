@@ -1,5 +1,7 @@
 import MainPage, { MainPageProps } from "../../views/pages/MainPage";
 import render from "../../utils/render";
+import InputField, { INPUT_FIELD_VARIANTS } from "../../ui/InputField";
+import { validateRequired } from "../../utils/validators";
 
 const chats = [
   {
@@ -44,11 +46,52 @@ const messages = [
   },
 ];
 
+const inputProps = {
+  name: "message",
+  placeholder: "Сообщение",
+  variant: INPUT_FIELD_VARIANTS.ROUNDED,
+  showErrors: false,
+  validators: [validateRequired],
+};
+
+const inputSettings = {
+  withInternalID: true,
+};
+
+const messageInputField = new InputField(inputProps, inputSettings);
+
+const onSubmitHandler = (e: SubmitEvent) => {
+  e.preventDefault();
+
+  const errors = [];
+
+  const formData = {
+    [`${messageInputField.props.name}`]: messageInputField.value,
+  };
+
+  messageInputField.validate();
+
+  if (messageInputField.props.errorText) {
+    errors.push({
+      name: messageInputField.props.name,
+      value: messageInputField.value,
+      error: messageInputField.props.errorText,
+    });
+  }
+
+  console.log(formData);
+  console.log({ errors });
+};
+
 const props: MainPageProps = {
   chats,
+  messageInputField,
   activeChat: {
     name: `Вадим`,
     messages,
+  },
+  events: {
+    submit: onSubmitHandler,
   },
 };
 

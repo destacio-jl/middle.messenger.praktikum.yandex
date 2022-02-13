@@ -1,3 +1,5 @@
+import InputField from "../../../ui/InputField";
+
 type Chat = {
   name: string;
   message: string;
@@ -15,8 +17,12 @@ type Message = {
 
 export type MainPageProps = {
   chats: Chat[];
+  messageInputField: InputField;
   activeChat?: {
     name: string;
     messages: Message[];
+  };
+  events?: {
+    submit?: (e: SubmitEvent) => void;
   };
 };

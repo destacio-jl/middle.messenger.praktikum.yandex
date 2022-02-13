@@ -51,11 +51,11 @@
       {{/each}}
     </div>
 
-    <div class="chat__footer">
+    <form class="chat__footer">
       <button class="chat__attach"></button>
-      <input type="text" name="message" class="chat__input" placeholder="Сообщение">
-      <button class="chat__send"></button>
-    </div>
+      {{{ messageInputField }}}
+      <button class="chat__send" type="submit"></button>
+    </form>
 
   {{else}}
     <div class="chat__unselected-message">Выберите чат чтобы отправить сообщение</div>

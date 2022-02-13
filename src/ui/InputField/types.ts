@@ -3,13 +3,16 @@ import { Validator } from "../../utils/validators";
 export enum INPUT_FIELD_VARIANTS {
   AUTH = `auth`,
   PROFILE = `profile`,
+  ROUNDED = `rounded`,
 }
 
 export type InputFieldProps = {
   name: string;
-  type: string;
-  label: string;
+  showErrors?: boolean;
+  label?: string;
+  type?: string;
   errorText?: string;
+  placeholder?: string;
   value?: string;
   disabled?: boolean;
   variant?: INPUT_FIELD_VARIANTS;

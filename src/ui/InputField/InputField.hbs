@@ -2,6 +2,8 @@
   <input id="{{name}}" name={{name}} type="{{type}}" value="{{value}}" {{disabled}} placeholder=" ">
   <label for="{{name}}">{{label}}</label>
 </div>
-{{#if errorText}}
-  <p class="auth__error">{{errorText}}</p>
+{{#if showErrors}}
+  {{#if errorText}}
+    <p class="auth__error">{{errorText}}</p>
+  {{/if}}
 {{/if}}
