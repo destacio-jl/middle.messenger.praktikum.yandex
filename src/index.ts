@@ -1,6 +1,5 @@
-import Button from "../src/components/Button";
-import IBlock from "../src/core/block";
-import InputField from "./components/InputField/InputField";
+import { IBlock } from "./core/Block";
+import Button from "./ui/Button";
 
 function render(query: string, block: IBlock) {
   const root = document.querySelector(query);

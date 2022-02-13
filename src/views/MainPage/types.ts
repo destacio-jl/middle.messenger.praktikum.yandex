@@ -1,4 +1,4 @@
-import InputField from "../../../ui/InputField";
+import InputField from "../../ui/InputField";
 
 type Chat = {
   name: string;

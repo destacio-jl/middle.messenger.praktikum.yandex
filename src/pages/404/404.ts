@@ -1,4 +1,4 @@
-import ErrorPage from "../../views/pages/ErrorPage";
+import ErrorPage from "../../views/ErrorPage";
 import render from "../../utils/render";
 
 const props = {

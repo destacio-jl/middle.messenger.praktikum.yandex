@@ -1,4 +1,4 @@
-import AuthPage, { AuthPageProps } from "../../views/pages/AuthPage";
+import AuthPage, { AuthPageProps } from "../../views/AuthPage";
 import render from "../../utils/render";
 import InputField from "../../ui/InputField";
 import Button from "../../ui/Button";

@@ -10,7 +10,7 @@ const filesDirectory = `${__dirname}/dist`;
 app.use(express.static(path.join(__dirname, "dist")));
 
 app.use(function (req, res, next) {
-  res.status(404).sendFile(`${filesDirectory}/404.html`);
+  res.status(404).sendFile(`${filesDirectory}/404/404.html`);
 });
 
 app.listen(port);

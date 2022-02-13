@@ -1,8 +1,7 @@
-import ProfilePage, { ProfilePageProps } from "../../views/pages/ProfilePage";
+import ProfilePage, { ProfilePageProps } from "../../views/ProfilePage";
 import render from "../../utils/render";
 import InputField, { INPUT_FIELD_VARIANTS } from "../../ui/InputField";
 import { passwordValidators } from "../../utils/validators";
-import HTTPTransport from "../../core/HTTPTransport";
 
 const inputSettings = {
   withInternalID: true,

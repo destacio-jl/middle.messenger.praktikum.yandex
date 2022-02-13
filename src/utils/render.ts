@@ -1,4 +1,4 @@
-import { IBlock } from "../core/block";
+import { IBlock } from "../core/Block";
 
 const render = (query: string, block: IBlock) => {
   const root = document.querySelector(query);

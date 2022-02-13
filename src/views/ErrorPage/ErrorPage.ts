@@ -1,4 +1,4 @@
-import Block from "../../../core/block";
+import Block from "../../core/block";
 import template from "./ErrorPage.hbs";
 import { ErrorPageProps } from "./types";
 

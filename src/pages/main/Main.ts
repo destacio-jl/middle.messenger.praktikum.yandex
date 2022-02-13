@@ -1,4 +1,4 @@
-import MainPage, { MainPageProps } from "../../views/pages/MainPage";
+import MainPage, { MainPageProps } from "../../views/MainPage";
 import render from "../../utils/render";
 import InputField, { INPUT_FIELD_VARIANTS } from "../../ui/InputField";
 import { validateRequired } from "../../utils/validators";

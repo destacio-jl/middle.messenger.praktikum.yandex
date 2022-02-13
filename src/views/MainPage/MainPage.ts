@@ -1,6 +1,6 @@
 import { MainPageProps } from "./types";
 import template from "./MainPage.hbs";
-import Block from "../../../core/block";
+import Block from "../../core/block";
 
 class MainPage extends Block {
   constructor(props: MainPageProps) {

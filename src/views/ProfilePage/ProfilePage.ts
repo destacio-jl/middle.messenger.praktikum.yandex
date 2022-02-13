@@ -1,6 +1,6 @@
 import { ProfilePageProps } from "./types";
 import template from "./ProfilePage.hbs";
-import Block from "../../../core/block";
+import Block from "../../core/Block";
 
 class ProfilePage extends Block {
   constructor(props: ProfilePageProps) {

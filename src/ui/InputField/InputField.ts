@@ -1,4 +1,4 @@
-import Block, { BlockSettings } from "../../core/block";
+import Block, { BlockSettings } from "../../core/Block";
 import { compile } from "handlebars";
 import inputFieldTemplate from "./InputField.hbs";
 import profileFieldTemplate from "./ProfileField.hbs";

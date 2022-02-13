@@ -1,4 +1,4 @@
-import EventBus, { IEventBus } from "./event-bus";
+import EventBus, { IEventBus } from "./EventBus";
 import { v4 as makeUUID } from "uuid";
 import { compile } from "handlebars";
 
