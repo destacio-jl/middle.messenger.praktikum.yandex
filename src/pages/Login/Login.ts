@@ -2,13 +2,7 @@ import AuthPage, { AuthPageProps } from "../../views/pages/AuthPage";
 import render from "../../utils/render";
 import InputField from "../../ui/InputField";
 import Button from "../../ui/Button";
-import {
-  validateLoginString,
-  validateMaxLength,
-  validateMinLength,
-  validatePasswordString,
-  validateRequired,
-} from "../../utils/validators";
+import { loginValidators, passwordValidators } from "../../utils/validators";
 
 const inputSettings = {
   withInternalID: true,
@@ -19,23 +13,13 @@ const FIELDS_PROPS = {
     type: "text",
     label: "Логин",
     name: "login",
-    validators: [
-      validateRequired,
-      validateMinLength(3),
-      validateMaxLength(20),
-      validateLoginString,
-    ],
+    validators: loginValidators,
   },
   PASSWORD: {
     type: "password",
     label: "Пароль",
     name: "password",
-    validators: [
-      validateRequired,
-      validateMinLength(8),
-      validateMaxLength(40),
-      validatePasswordString,
-    ],
+    validators: passwordValidators,
   },
 };
 

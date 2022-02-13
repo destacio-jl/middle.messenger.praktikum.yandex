@@ -91,6 +91,10 @@ body {
   border-radius: 8px;
   outline: none;
   cursor: pointer;
+
+  div + & {
+    margin-top: 40px;
+  }
 }
 
 .auth__link {
