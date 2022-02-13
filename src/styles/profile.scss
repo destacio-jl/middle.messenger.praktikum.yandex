@@ -97,15 +97,6 @@
   width: 100%;
 }
 
-.profile__field {
-  width: 100%;
-  border-bottom: 1px solid #eaeaea;
-
-  &:last-child {
-    border-bottom: 0;
-  }
-}
-
 .profile__field label {
   display: flex;
   justify-content: space-between;
@@ -113,6 +104,8 @@
   font-size: 13px;
   line-height: 13px;
   font-weight: 500;
+  border-bottom: 1px solid #eaeaea;
+  cursor: pointer;
 
   span {
     color: $color-text-main;
@@ -127,6 +120,14 @@
     border: 0;
     outline: none;
     color: $color-text-light;
+  }
+}
+
+.profile__field {
+  width: 100%;
+
+  &:last-child label {
+    border-bottom: 0;
   }
 }
 
@@ -166,4 +167,10 @@
   border: 0;
   outline: none;
   cursor: pointer;
+}
+
+.profile__error {
+  margin-top: 5px;
+  font-size: 10px;
+  color: $color-error;
 }

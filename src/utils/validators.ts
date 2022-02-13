@@ -95,3 +95,12 @@ export const passwordValidators = [
   validateMaxLength(40),
   validatePasswordString,
 ];
+
+export const emailValidators = [validateRequired, validateEmail];
+
+export const phoneValidators = [
+  validateRequired,
+  validateMinLength(10),
+  validateMaxLength(15),
+  validatePhoneString,
+];

@@ -6,4 +6,7 @@ export type ProfilePageProps = {
   fields: InputField[];
   actions?: Button[];
   editable?: boolean;
+  events?: {
+    submit?: (e: SubmitEvent) => void;
+  };
 };

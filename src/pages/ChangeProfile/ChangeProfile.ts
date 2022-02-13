@@ -1,8 +1,12 @@
 import ProfilePage, { ProfilePageProps } from "../../views/pages/ProfilePage";
 import render from "../../utils/render";
-import InputField from "../../ui/InputField";
-import { INPUT_FIELD_VARIANTS } from "../../ui/InputField/InputField";
-import Button from "../../ui/Button";
+import InputField, { INPUT_FIELD_VARIANTS } from "../../ui/InputField";
+import {
+  emailValidators,
+  loginValidators,
+  nameValidators,
+  phoneValidators,
+} from "../../utils/validators";
 
 const inputSettings = {
   withInternalID: true,
@@ -17,6 +21,7 @@ const FIELDS_PROPS = {
     name: "email",
     value: "pochta@yandex.ru",
     variant,
+    validators: emailValidators,
   },
   LOGIN: {
     type: "text",
@@ -24,6 +29,7 @@ const FIELDS_PROPS = {
     name: "login",
     value: "ivanivanov",
     variant,
+    validators: loginValidators,
   },
   FIRST_NAME: {
     type: "text",
@@ -31,6 +37,7 @@ const FIELDS_PROPS = {
     name: "first_name",
     value: "Иван",
     variant,
+    validators: nameValidators,
   },
   SECOND_NAME: {
     type: "text",
@@ -38,6 +45,7 @@ const FIELDS_PROPS = {
     name: "second_name",
     value: "Иванов",
     variant,
+    validators: nameValidators,
   },
   DISPLAY_NAME: {
     type: "text",
@@ -45,13 +53,15 @@ const FIELDS_PROPS = {
     name: "display_name",
     value: "Иван",
     variant,
+    validators: nameValidators,
   },
   PHONE: {
     type: "text",
     label: "Телефон",
     name: "phone",
-    value: "+7 (909) 967 30 30",
+    value: "+79099673030",
     variant,
+    validators: phoneValidators,
   },
 };
 
@@ -62,17 +72,47 @@ const secondName = new InputField(FIELDS_PROPS.SECOND_NAME, inputSettings);
 const displayName = new InputField(FIELDS_PROPS.DISPLAY_NAME, inputSettings);
 const phoneName = new InputField(FIELDS_PROPS.PHONE, inputSettings);
 
+const fields = [
+  emailField,
+  loginField,
+  firstNameField,
+  secondName,
+  displayName,
+  phoneName,
+];
+
+const onSubmitHandler = (e: SubmitEvent) => {
+  e.preventDefault();
+
+  const errors = [];
+
+  const formData = fields.reduce((data, field) => {
+    field.validate();
+
+    if (field.props.errorText) {
+      errors.push({
+        name: field.props.name,
+        value: field.value,
+        error: field.props.errorText,
+      });
+    }
+
+    return {
+      ...data,
+      [`${field.props.name}`]: field.value,
+    };
+  }, {});
+
+  console.log(formData);
+};
+
 const props: ProfilePageProps = {
   name: `Иван`,
-  fields: [
-    emailField,
-    loginField,
-    firstNameField,
-    secondName,
-    displayName,
-    phoneName,
-  ],
+  fields,
   editable: true,
+  events: {
+    submit: onSubmitHandler,
+  },
 };
 
 const loginPage = new ProfilePage(props);

@@ -1,7 +1,7 @@
 import ProfilePage, { ProfilePageProps } from "../../views/pages/ProfilePage";
 import render from "../../utils/render";
-import InputField from "../../ui/InputField";
-import { INPUT_FIELD_VARIANTS } from "../../ui/InputField/InputField";
+import InputField, { INPUT_FIELD_VARIANTS } from "../../ui/InputField";
+import { passwordValidators } from "../../utils/validators";
 
 const inputSettings = {
   withInternalID: true,
@@ -15,18 +15,21 @@ const FIELDS_PROPS = {
     label: "Старый пароль",
     name: "oldPassword",
     variant,
+    validators: passwordValidators,
   },
   NEW_PASSWORD: {
     type: "password",
     label: "Новый пароль",
     name: "newPassword",
     variant,
+    validators: passwordValidators,
   },
   NEW_PASSWORD_REPEAT: {
     type: "password",
     label: "Повторите новый пароль",
     name: "newPasswordRepeat",
     variant,
+    validators: passwordValidators,
   },
 };
 
@@ -43,10 +46,40 @@ const newPasswordRepeatField = new InputField(
   inputSettings
 );
 
+const fields = [oldPasswordField, newPasswordField, newPasswordRepeatField];
+
+const onSubmitHandler = (e: SubmitEvent) => {
+  e.preventDefault();
+
+  const errors = [];
+
+  const formData = fields.reduce((data, field) => {
+    field.validate();
+
+    if (field.props.errorText) {
+      errors.push({
+        name: field.props.name,
+        value: field.value,
+        error: field.props.errorText,
+      });
+    }
+
+    return {
+      ...data,
+      [`${field.props.name}`]: field.value,
+    };
+  }, {});
+
+  console.log(formData);
+};
+
 const props: ProfilePageProps = {
   name: `Иван`,
-  fields: [oldPasswordField, newPasswordField, newPasswordRepeatField],
+  fields,
   editable: true,
+  events: {
+    submit: onSubmitHandler,
+  },
 };
 
 const changePasswordPage = new ProfilePage(props);

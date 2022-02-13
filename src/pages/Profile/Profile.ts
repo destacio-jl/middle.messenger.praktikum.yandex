@@ -1,7 +1,6 @@
 import ProfilePage, { ProfilePageProps } from "../../views/pages/ProfilePage";
 import render from "../../utils/render";
-import InputField from "../../ui/InputField";
-import { INPUT_FIELD_VARIANTS } from "../../ui/InputField/InputField";
+import InputField, { INPUT_FIELD_VARIANTS } from "../../ui/InputField";
 import Button from "../../ui/Button";
 
 const inputSettings = {

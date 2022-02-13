@@ -3,14 +3,11 @@ import render from "../../utils/render";
 import InputField from "../../ui/InputField";
 import Button from "../../ui/Button";
 import {
-  validateEmail,
-  validateRequired,
-  validateMaxLength,
-  validateMinLength,
-  validatePhoneString,
   loginValidators,
   nameValidators,
   passwordValidators,
+  emailValidators,
+  phoneValidators,
 } from "../../utils/validators";
 
 const inputSettings = {
@@ -22,7 +19,7 @@ const FIELDS_PROPS = {
     type: "email",
     label: "Почта",
     name: "email",
-    validators: [validateRequired, validateEmail],
+    validators: emailValidators,
   },
   LOGIN: {
     type: "text",
@@ -46,12 +43,7 @@ const FIELDS_PROPS = {
     type: "text",
     label: "Телефон",
     name: "phone",
-    validators: [
-      validateRequired,
-      validateMinLength(10),
-      validateMaxLength(15),
-      validatePhoneString,
-    ],
+    validators: phoneValidators,
   },
   PASSWORD: {
     type: "password",
