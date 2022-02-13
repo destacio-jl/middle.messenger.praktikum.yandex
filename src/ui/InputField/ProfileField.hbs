@@ -1,0 +1,7 @@
+<label>
+  <span>{{label}}</span>
+  <input name={{name}} type="{{type}}" value="{{value}}" {{disabled}} />
+</label>
+{{#if errorText}}
+  <p class="auth__error">{{errorText}}</p>
+{{/if}}

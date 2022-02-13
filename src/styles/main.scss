@@ -1,5 +1,5 @@
-@import "../../styles/variables";
-@import "../../styles/reset";
+@import "./variables";
+@import "./reset";
 
 .main {
   display: flex;
@@ -265,7 +265,7 @@
   border: 0;
   outline: none;
   background-color: $color-accent;
-  background-image: url("../../images/arrow-right.svg");
+  background-image: url("../images/arrow-right.svg");
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
@@ -278,8 +278,17 @@
   border: 0;
   outline: none;
   background-color: transparent;
-  background-image: url("../../images/attach.svg");
+  background-image: url("../images/attach.svg");
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
+}
+
+.chat__unselected-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 12px;
+  color: $color-text-light;
 }

@@ -2,8 +2,18 @@
   "extends": [
     "airbnb-base/legacy",
     "plugin:prettier/recommended",
-    "prettier"
+    "prettier",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["html", "hbs", "@typescript-eslint", "prettier"]
+  "plugins": ["html", "hbs", "@typescript-eslint", "prettier"],
+  "rules": {
+    "no-underscore-dangle": "off",
+    "no-console": "off",
+    "class-methods-use-this": "off",
+    "no-param-reassign": "off",
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"]
+  }
 }

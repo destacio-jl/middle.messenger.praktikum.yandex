@@ -1,5 +1,5 @@
-@import "../../styles/variables";
-@import "../../styles/reset";
+@import "./variables";
+@import "./reset";
 
 .profile {
   display: flex;
@@ -21,7 +21,7 @@
   border: 0;
   outline: none;
   background-color: $color-accent;
-  background-image: url("../../images/arrow-left.svg");
+  background-image: url("../images/arrow-left.svg");
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
@@ -93,18 +93,26 @@
   color: $color-text-main;
 }
 
+.profile__fields {
+  width: 100%;
+}
+
 .profile__field {
-  display: flex;
-  justify-content: space-between;
   width: 100%;
   border-bottom: 1px solid #eaeaea;
-  font-size: 13px;
-  line-height: 13px;
-  font-weight: 500;
 
   &:last-child {
     border-bottom: 0;
   }
+}
+
+.profile__field label {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 13px;
+  line-height: 13px;
+  font-weight: 500;
 
   span {
     color: $color-text-main;
@@ -113,6 +121,7 @@
 
   input {
     width: auto;
+    flex-grow: 1;
     text-align: right;
     background: none;
     border: 0;
@@ -145,6 +154,7 @@
 }
 
 .profile__action-button {
+  margin-top: 60px;
   width: 280px;
   height: 37px;
   line-height: 37px;
