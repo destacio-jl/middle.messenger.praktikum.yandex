@@ -198,12 +198,10 @@ class Block implements IBlock {
   }
 
   _makePropsProxy(props) {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const self = this;
     const proxyProps = new Proxy(props, {
-      set(target, prop, value) {
+      set: (target, prop, value) => {
         target[prop] = value;
-        self._render();
+        this._render();
         return true;
       },
       deleteProperty() {
@@ -269,11 +267,11 @@ class Block implements IBlock {
   }
 
   show() {
-    this.getContent().style.display = "block";
+    this._element.classList.remove = "hidden";
   }
 
   hide() {
-    this.getContent().style.display = "none";
+    this._element.classList.add = "hidden";
   }
 }
 

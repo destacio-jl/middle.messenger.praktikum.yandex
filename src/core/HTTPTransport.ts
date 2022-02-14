@@ -66,10 +66,20 @@ class HTTPTransport {
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      xhr.open(method, url);
 
-      xhr.onload = function () {
-        resolve(xhr);
+      xhr.open(method, url);
+      xhr.setRequestHeader(`content-type`, `application/json`);
+
+      xhr.onload = function (e) {
+        const statusCode = Number(xhr.status.toString().charAt(0));
+
+        if (statusCode === 2) {
+          resolve(xhr);
+        }
+
+        if (statusCode === 4 || statusCode === 5) {
+          reject(xhr);
+        }
       };
 
       xhr.onabort = reject;

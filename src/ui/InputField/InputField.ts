@@ -14,7 +14,7 @@ const TEMPLATES = {
 const CLASSES = {
   [INPUT_FIELD_VARIANTS.AUTH]: ``,
   [INPUT_FIELD_VARIANTS.PROFILE]: `profile__field`,
-  [INPUT_FIELD_VARIANTS.ROUNDED]: `chat__input`,
+  [INPUT_FIELD_VARIANTS.ROUNDED]: `rounded-input`,
 };
 
 class InputField extends Block {
