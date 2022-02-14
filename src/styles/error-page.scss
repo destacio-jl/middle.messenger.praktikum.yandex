@@ -1,0 +1,33 @@
+@import "./variables";
+@import "./reset";
+
+.error-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.error-page__code {
+  margin-bottom: 20px;
+  color: $color-text-main;
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 40px;
+}
+
+.error-page__text {
+  margin-bottom: 69px;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 20px;
+  color: $color-text-main;
+}
+
+.error-page__link {
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 11px;
+  color: $color-accent;
+}

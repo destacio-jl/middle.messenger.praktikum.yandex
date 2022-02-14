@@ -1,0 +1,6 @@
+<input type="{{ type }}" value="{{value}}" name="{{ name }}" placeholder="{{ placeholder }}">
+{{#if showErrors}}
+  {{#if errorText}}
+    <p class="rounded-input__error">{{ errorText }}</p>
+  {{/if}}
+{{/if}}
