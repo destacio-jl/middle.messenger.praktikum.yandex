@@ -1,7 +1,7 @@
 import ProfilePage, { ProfilePageProps } from "../../views/ProfilePage";
-import render from "../../utils/render";
 import InputField, { INPUT_FIELD_VARIANTS } from "../../ui/InputField";
 import Button from "../../ui/Button";
+import { ROUTES } from "../../const";
 
 const inputSettings = {
   withInternalID: true,
@@ -68,20 +68,21 @@ const displayName = new InputField(FIELDS_PROPS.DISPLAY_NAME, inputSettings);
 const phoneName = new InputField(FIELDS_PROPS.PHONE, inputSettings);
 
 const editProfileAction = new Button(
-  { text: "Изменить данные", href: "/change-profile" },
+  { text: "Изменить данные", href: ROUTES.CHANGE_PROFILE },
   { className: "profile__action" }
 );
 const editPasswordAction = new Button(
-  { text: "Изменить пароль", href: "/change-password" },
+  { text: "Изменить пароль", href: ROUTES.CHANGE_PASSWORD },
   { className: "profile__action" }
 );
 const logoutAction = new Button(
-  { text: "Выйти", href: "/login" },
+  { text: "Выйти", href: ROUTES.LOGIN },
   { className: ["profile__action", "profile__action_danger"] }
 );
 
 const props: ProfilePageProps = {
   name: `Иван`,
+  backLinkRoute: ROUTES.CHATS,
   fields: [
     emailField,
     loginField,
@@ -93,6 +94,6 @@ const props: ProfilePageProps = {
   actions: [editProfileAction, editPasswordAction, logoutAction],
 };
 
-const loginPage = new ProfilePage(props);
+const profilePage = new ProfilePage(props);
 
-render(".app", loginPage);
+export default profilePage;

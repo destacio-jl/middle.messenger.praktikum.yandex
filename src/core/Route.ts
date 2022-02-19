@@ -2,6 +2,11 @@ import render from "../utils/render";
 import Block from "./Block";
 import { BlockConstructor } from "./types";
 
+type Props = {
+  rootQuery?: string;
+  [key: string]: unknown;
+};
+
 export default class Route {
   _pathname: string = null;
 
@@ -9,18 +14,19 @@ export default class Route {
 
   _block: Block = null;
 
-  _props = {};
+  _props: Props = {};
+
+  _initialized = false;
 
   constructor(
     pathname: string,
-    view: BlockConstructor<Block>,
+    view: Block,
     props: {
       [key: string]: unknown;
     }
   ) {
     this._pathname = pathname;
-    this._blockClass = view;
-    this._block = null;
+    this._block = view;
     this._props = props;
   }
 
@@ -42,12 +48,13 @@ export default class Route {
   }
 
   render() {
-    if (!this._block) {
-      this._block = new this._blockClass();
-      render(".app", this._block);
-      return;
-    }
+    const { rootQuery } = this._props;
 
-    this._block.show();
+    if (this._initialized) {
+      this._block.show();
+    } else {
+      render(rootQuery, this._block);
+      this._initialized = true;
+    }
   }
 }

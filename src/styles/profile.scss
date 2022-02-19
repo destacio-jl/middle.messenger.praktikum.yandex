@@ -137,6 +137,8 @@
 
 .profile__action {
   display: block;
+  border: 0;
+  background: none;
   padding: 10px 0;
   width: 100%;
   font-weight: 500;
@@ -144,6 +146,7 @@
   line-height: 13px;
   border-bottom: 1px solid $color-border-light;
   color: $color-accent;
+  cursor: pointer;
 
   &_danger {
     color: $color-danger;

@@ -101,5 +101,8 @@ body {
   display: block;
   color: $color-accent;
   font-size: 11px;
+  border: 0;
+  background: none;
   text-align: center;
+  cursor: pointer;
 }

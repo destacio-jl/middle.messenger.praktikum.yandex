@@ -1,6 +1,6 @@
 import Block from "./Block";
 import Route from "./Route";
-import { BlockConstructor, PopStateEventType } from "./types";
+import { PopStateEventType } from "./types";
 
 class Router {
   routes: Route[] = [];
@@ -9,16 +9,19 @@ class Router {
 
   _currentRoute: Route = null;
 
-  constructor() {
+  constructor(rootQuery: string) {
     if (Router.__instance) {
       return Router.__instance as Router;
     }
 
+    this._rootQuery = rootQuery;
     Router.__instance = this;
   }
 
-  use(pathname: string, block: BlockConstructor<Block>) {
-    const route = new Route(pathname, block, { rootQuery: this._rootQuery });
+  use(pathname: string, block: Block) {
+    const route = new Route(pathname, block, {
+      rootQuery: this._rootQuery,
+    });
     this.routes.push(route);
     return this;
   }
@@ -33,6 +36,7 @@ class Router {
 
   _onRoute(pathname: string) {
     const route = this.getRoute(pathname);
+
     if (!route) {
       return;
     }
@@ -40,6 +44,8 @@ class Router {
     if (this._currentRoute) {
       this._currentRoute.leave();
     }
+
+    this._currentRoute = route;
 
     route.render(route, pathname);
   }

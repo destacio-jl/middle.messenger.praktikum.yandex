@@ -95,6 +95,6 @@ const props: MainPageProps = {
   },
 };
 
-const loginPage = new MainPage(props);
+const mainPage = new MainPage(props);
 
-render(".app", loginPage);
+export default mainPage;

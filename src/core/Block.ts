@@ -127,6 +127,7 @@ class Block implements IBlock {
   }
 
   _componentDidUpdate(oldProps, newProps) {
+    console.log("CDU");
     const response = this.componentDidUpdate(oldProps, newProps);
   }
 
@@ -284,11 +285,11 @@ class Block implements IBlock {
   }
 
   show() {
-    this._element.classList.remove = "hidden";
+    this.getContent().classList.remove("hidden");
   }
 
   hide() {
-    this._element.classList.add = "hidden";
+    this.getContent().classList.add("hidden");
   }
 }
 

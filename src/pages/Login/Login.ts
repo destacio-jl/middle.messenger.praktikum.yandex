@@ -1,8 +1,10 @@
 import AuthPage, { AuthPageProps } from "../../views/AuthPage";
-import render from "../../utils/render";
 import InputField from "../../ui/InputField";
 import Button from "../../ui/Button";
 import { loginValidators, passwordValidators } from "../../utils/validators";
+import isEmpty from "../../utils/isEmpty";
+import Router from "../../core/Router";
+import { ROOT_QUERY, ROUTES } from "../../const";
 
 const inputSettings = {
   withInternalID: true,
@@ -23,12 +25,19 @@ const FIELDS_PROPS = {
   },
 };
 
+const router = new Router(ROOT_QUERY);
+
 const loginField = new InputField(FIELDS_PROPS.LOGIN, inputSettings);
 const passwordField = new InputField(FIELDS_PROPS.PASSWORD, inputSettings);
 
 const fields = [loginField, passwordField];
 
 const action = new Button({ text: "Авторизоваться", type: "submit" });
+
+const link = new Button(
+  { text: "Зарегистрироваться", href: ROUTES.SIGN_IN },
+  { className: "auth__link" }
+);
 
 const onSubmitHandler = (e: SubmitEvent) => {
   e.preventDefault();
@@ -52,13 +61,16 @@ const onSubmitHandler = (e: SubmitEvent) => {
     };
   }, {});
 
-  console.log(formData);
+  if (isEmpty(errors)) {
+    router.go(ROUTES.CHATS);
+  }
 };
 
 const props: AuthPageProps = {
   name: "Вход",
   fields,
   action,
+  link,
   events: {
     submit: onSubmitHandler,
   },
@@ -66,4 +78,4 @@ const props: AuthPageProps = {
 
 const loginPage = new AuthPage(props);
 
-render(".app", loginPage);
+export default loginPage;

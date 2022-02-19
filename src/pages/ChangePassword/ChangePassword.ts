@@ -2,6 +2,7 @@ import ProfilePage, { ProfilePageProps } from "../../views/ProfilePage";
 import render from "../../utils/render";
 import InputField, { INPUT_FIELD_VARIANTS } from "../../ui/InputField";
 import { passwordValidators } from "../../utils/validators";
+import { ROUTES } from "../../const";
 
 const inputSettings = {
   withInternalID: true,
@@ -80,6 +81,7 @@ const onSubmitHandler = (e: SubmitEvent) => {
 const props: ProfilePageProps = {
   name: `Иван`,
   fields,
+  backLinkRoute: ROUTES.PROFILE,
   editable: true,
   events: {
     submit: onSubmitHandler,
@@ -88,4 +90,4 @@ const props: ProfilePageProps = {
 
 const changePasswordPage = new ProfilePage(props);
 
-render(".app", changePasswordPage);
+export default changePasswordPage;

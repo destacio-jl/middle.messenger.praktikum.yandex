@@ -1,45 +1,24 @@
-import { compile } from "handlebars";
-import template from "./index.hbs";
-import renderString from "./utils/renderString";
+import { ROUTES } from "./const";
+import Router from "./core/Router";
+import page404 from "./pages/404/404";
+import page500 from "./pages/500/500";
+import changePasswordPage from "./pages/ChangePassword/ChangePassword";
+import changeProfilePage from "./pages/ChangeProfile/ChangeProfile";
+import loginPage from "./pages/Login/Login";
+import mainPage from "./pages/main/Main";
+import profilePage from "./pages/Profile/Profile";
+import signInPage from "./pages/SignIn/SignIn";
 
-const props = {
-  links: [
-    {
-      href: "/pages/Login/Login.html",
-      text: "Login",
-    },
-    {
-      href: "/pages/SignIn/SignIn.html",
-      text: "SignIn",
-    },
-    {
-      href: "/pages/Profile/Profile.html",
-      text: "Profile",
-    },
-    {
-      href: "/pages/ChangeProfile/ChangeProfile.html",
-      text: "ChangeProfile",
-    },
-    {
-      href: "/pages/ChangePassword/ChangePassword.html",
-      text: "ChangePassword",
-    },
-    {
-      href: "/pages/Main/Main.html",
-      text: "Main",
-    },
-    {
-      href: "/pages/404/404.html",
-      text: "404",
-    },
-    {
-      href: "/pages/500/500.html",
-      text: "500",
-    },
-  ],
-};
+const router = new Router(".app");
 
-const indexPageTemplate = compile(template);
-const compiledTemplate = indexPageTemplate(props);
-
-renderString(".app", compiledTemplate);
+router
+  .use(ROUTES.LOGIN, loginPage)
+  .use("/login", loginPage)
+  .use(ROUTES.SIGN_IN, signInPage)
+  .use(ROUTES.ERROR_404, page404)
+  .use(ROUTES.ERROR_500, page500)
+  .use(ROUTES.PROFILE, profilePage)
+  .use(ROUTES.CHANGE_PASSWORD, changePasswordPage)
+  .use(ROUTES.CHANGE_PROFILE, changeProfilePage)
+  .use(ROUTES.CHATS, mainPage)
+  .start();

@@ -1,5 +1,4 @@
 import ProfilePage, { ProfilePageProps } from "../../views/ProfilePage";
-import render from "../../utils/render";
 import InputField, { INPUT_FIELD_VARIANTS } from "../../ui/InputField";
 import {
   emailValidators,
@@ -7,6 +6,7 @@ import {
   nameValidators,
   phoneValidators,
 } from "../../utils/validators";
+import { ROUTES } from "../../const";
 
 const inputSettings = {
   withInternalID: true,
@@ -110,11 +110,12 @@ const props: ProfilePageProps = {
   name: `Иван`,
   fields,
   editable: true,
+  backLinkRoute: ROUTES.PROFILE,
   events: {
     submit: onSubmitHandler,
   },
 };
 
-const loginPage = new ProfilePage(props);
+const changeProfilePage = new ProfilePage(props);
 
-render(".app", loginPage);
+export default changeProfilePage;

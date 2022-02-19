@@ -1,5 +1,4 @@
 import ErrorPage from "../../views/ErrorPage";
-import render from "../../utils/render";
 
 const props = {
   code: 500,
@@ -8,6 +7,6 @@ const props = {
   href: "#",
 };
 
-const page404 = new ErrorPage(props);
+const page500 = new ErrorPage(props);
 
-render(".app", page404);
+export default page500;

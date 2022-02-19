@@ -4,6 +4,7 @@ import InputField from "../../ui/InputField/InputField";
 export type ProfilePageProps = {
   name: string;
   fields: InputField[];
+  backLinkRoute: string;
   actions?: Button[];
   editable?: boolean;
   events?: {

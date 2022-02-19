@@ -22,11 +22,14 @@
 }
 
 .chats__profile-link {
+  border: 0;
+  background: none;
   margin-bottom: 20px;
   align-self: flex-end;
   font-weight: 500;
   font-size: 12px;
   color: $color-text-light;
+  cursor: pointer;
 }
 
 .chats__search {

@@ -1,21 +1,35 @@
+import { ROOT_QUERY } from "../../const";
 import Block, { BlockSettings } from "../../core/Block";
+import Router from "../../core/Router";
 import template from "./Button.hbs";
 import { ButtonProps } from "./types";
 
 class Button extends Block {
   constructor(props: ButtonProps, settings: BlockSettings = {}) {
-    const { href, type = "button" } = props;
+    const { href, events = {}, type = "button" } = props;
     const { className } = settings;
 
-    const node = href ? "a" : "button";
-    const settingsWithAttributes = href
-      ? { ...settings, attributes: { href } }
-      : { ...settings, attributes: { type } };
+    const settingsWithAttributes = { ...settings, attributes: { type } };
+    const updatedEvents = events as { [key: string]: () => void };
 
-    super(node, props, {
-      ...settingsWithAttributes,
-      className: className || `auth__action`,
-    });
+    if (href) {
+      const onClickHandler = (e: Event) => {
+        e.preventDefault();
+        const router = new Router(ROOT_QUERY);
+        router.go(href);
+      };
+
+      updatedEvents.click = onClickHandler;
+    }
+
+    super(
+      "button",
+      { ...props, events: updatedEvents },
+      {
+        ...settingsWithAttributes,
+        className: className || `auth__action`,
+      }
+    );
   }
 
   render() {
