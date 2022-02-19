@@ -1,6 +1,7 @@
 import EventBus, { IEventBus } from "./EventBus";
 import { v4 as makeUUID } from "uuid";
 import { compile } from "handlebars";
+import { Callback } from "./types";
 
 type Props = {
   [key: string]: unknown;
@@ -10,6 +11,11 @@ export type BlockSettings = {
   withInternalID?: boolean;
   className?: string | string[];
   attributes?: { [key: string]: string };
+};
+
+type Meta = {
+  tagName: string;
+  settings: BlockSettings;
 };
 
 export interface IBlock {
@@ -39,11 +45,11 @@ class Block implements IBlock {
     FLOW_CDU: "flow:component-did-update",
   };
 
-  _element = null;
+  _element: HTMLElement = null;
 
-  _id = null;
+  _id: string = null;
 
-  _meta = null;
+  _meta: Meta = null;
 
   children: { [key: string]: IBlock } = {};
 
@@ -65,7 +71,8 @@ class Block implements IBlock {
     const { withInternalID } = settings;
 
     if (withInternalID) {
-      this._id = makeUUID();
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      this._id = String(makeUUID());
       this.props = this._makePropsProxy({ ...props, __id: this._id });
     } else {
       this.props = this._makePropsProxy(props);
@@ -78,10 +85,16 @@ class Block implements IBlock {
   }
 
   _registerEvents(eventBus: IEventBus) {
-    eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
-    eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
-    eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
-    eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
+    eventBus.on(Block.EVENTS.INIT, this.init.bind(this) as Callback);
+    eventBus.on(
+      Block.EVENTS.FLOW_CDM,
+      this._componentDidMount.bind(this) as Callback
+    );
+    eventBus.on(
+      Block.EVENTS.FLOW_CDU,
+      this._componentDidUpdate.bind(this) as Callback
+    );
+    eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this) as Callback);
   }
 
   _createResources() {
@@ -105,7 +118,6 @@ class Block implements IBlock {
     });
   }
 
-  // Может переопределять пользователь, необязательно трогать
   componentDidMount(oldProps?: Props) {
     console.log("did mount, props:", oldProps);
   }
@@ -118,7 +130,6 @@ class Block implements IBlock {
     const response = this.componentDidUpdate(oldProps, newProps);
   }
 
-  // Может переопределять пользователь, необязательно трогать
   componentDidUpdate(oldProps, newProps) {
     return true;
   }
@@ -150,7 +161,6 @@ class Block implements IBlock {
     this._addEvents();
   }
 
-  // Может переопределять пользователь, необязательно трогать
   render(): string | HTMLTemplateElement {
     return this.element;
   }
@@ -167,7 +177,7 @@ class Block implements IBlock {
 
     Object.entries(this.children).forEach(([key, child]) => {
       if (Array.isArray(child)) {
-        propsAndStubs[key] = child.reduce((result, block) => {
+        propsAndStubs[key] = child.reduce((result: string, block: Block) => {
           return result + `<div data-id="${block._id}"></div>`;
         }, ``);
       } else {
@@ -182,7 +192,7 @@ class Block implements IBlock {
 
     Object.values(this.children).forEach((child) => {
       if (Array.isArray(child)) {
-        child.forEach((block) => {
+        child.forEach((block: Block) => {
           const stub = fragment.content.querySelector(
             `[data-id="${block._id}"]`
           );
@@ -197,8 +207,8 @@ class Block implements IBlock {
     return fragment;
   }
 
-  _makePropsProxy(props) {
-    const proxyProps = new Proxy(props, {
+  _makePropsProxy(props: Props): Props {
+    const proxyProps = new Proxy<Props>(props, {
       set: (target, prop, value) => {
         target[prop] = value;
         this._render();
@@ -224,7 +234,7 @@ class Block implements IBlock {
     if (className && typeof className === "string")
       element.classList.add(className);
     if (Array.isArray(className))
-      className.forEach((cl) => {
+      className.forEach((cl: string) => {
         element.classList.add(cl);
       });
     if (this._id) element.setAttribute("data-id", this._id);
@@ -235,7 +245,11 @@ class Block implements IBlock {
     const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {
-      this._element.addEventListener(eventName, events[eventName], true);
+      this._element.addEventListener(
+        eventName,
+        events[eventName] as EventListenerOrEventListenerObject,
+        true
+      );
     });
   }
 
@@ -243,7 +257,10 @@ class Block implements IBlock {
     const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {
-      this._element.removeEventListener(eventName, events[eventName]);
+      this._element.removeEventListener(
+        eventName,
+        events[eventName] as EventListenerOrEventListenerObject
+      );
     });
   }
 

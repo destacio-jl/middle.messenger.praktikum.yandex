@@ -6,9 +6,11 @@ import roundedFieldTemplate from "./RoundedInput.hbs";
 import { InputFieldProps, INPUT_FIELD_VARIANTS } from "./types";
 
 const TEMPLATES = {
-  [INPUT_FIELD_VARIANTS.AUTH]: inputFieldTemplate,
-  [INPUT_FIELD_VARIANTS.PROFILE]: profileFieldTemplate,
-  [INPUT_FIELD_VARIANTS.ROUNDED]: roundedFieldTemplate,
+  [INPUT_FIELD_VARIANTS.AUTH]: inputFieldTemplate as HandlebarsTemplateDelegate,
+  [INPUT_FIELD_VARIANTS.PROFILE]:
+    profileFieldTemplate as HandlebarsTemplateDelegate,
+  [INPUT_FIELD_VARIANTS.ROUNDED]:
+    roundedFieldTemplate as HandlebarsTemplateDelegate,
 };
 
 const CLASSES = {
@@ -75,15 +77,15 @@ class InputField extends Block {
     this.validate = validateAndShowError;
   }
 
-  get value() {
-    return this.element.querySelector(`[name=${this.props.name}]`).value;
+  get value(): string {
+    return String(
+      this.element.querySelector(`[name=${this.props.name}]`).value
+    );
   }
 
   render() {
     const { variant } = this.props;
-    const compiledTemplate = compile(
-      TEMPLATES[variant as INPUT_FIELD_VARIANTS]
-    );
+    const compiledTemplate = compile(TEMPLATES[variant]);
     return compiledTemplate(this.props);
   }
 }

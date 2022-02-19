@@ -46,7 +46,11 @@ const newPasswordRepeatField = new InputField(
   inputSettings
 );
 
-const fields = [oldPasswordField, newPasswordField, newPasswordRepeatField];
+const fields: InputField[] = [
+  oldPasswordField,
+  newPasswordField,
+  newPasswordRepeatField,
+];
 
 const onSubmitHandler = (e: SubmitEvent) => {
   e.preventDefault();

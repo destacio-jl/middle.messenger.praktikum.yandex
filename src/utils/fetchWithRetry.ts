@@ -7,7 +7,7 @@ interface FetchOptions extends RequestOptions {
 
 const api = new HTTPTransport();
 
-function fetchWithRetry(url: string, options: FetchOptions) {
+function fetchWithRetry(url: string, options: FetchOptions): never {
   const { tries = 1 } = options;
 
   function onError(err) {

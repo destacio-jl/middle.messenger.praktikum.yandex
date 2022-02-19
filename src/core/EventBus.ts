@@ -1,4 +1,4 @@
-type Callback = (...args: unknown[]) => void;
+import { Callback } from "./types";
 
 export interface IEventBus {
   listeners: {

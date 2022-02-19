@@ -8,7 +8,7 @@ class ProfilePage extends Block {
   }
 
   render() {
-    return this.compile(template, this.props);
+    return this.compile(template as HandlebarsTemplateDelegate, this.props);
   }
 }
 

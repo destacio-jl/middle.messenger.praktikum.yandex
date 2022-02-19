@@ -20,6 +20,7 @@
     "@anikin/parcel-transformer-handlebars": "^1.0.9",
     "@parcel/transformer-inline-string": "^2.2.1",
     "@parcel/transformer-sass": "^2.1.1",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
     "eslint": "^8.7.0",
