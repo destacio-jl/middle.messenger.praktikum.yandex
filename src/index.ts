@@ -13,7 +13,6 @@ const router = new Router(".app");
 
 router
   .use(ROUTES.LOGIN, loginPage)
-  .use("/login", loginPage)
   .use(ROUTES.SIGN_IN, signInPage)
   .use(ROUTES.ERROR_404, page404)
   .use(ROUTES.ERROR_500, page500)

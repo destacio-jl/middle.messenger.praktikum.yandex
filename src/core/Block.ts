@@ -71,7 +71,6 @@ class Block implements IBlock {
     const { withInternalID } = settings;
 
     if (withInternalID) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       this._id = String(makeUUID());
       this.props = this._makePropsProxy({ ...props, __id: this._id });
     } else {
@@ -284,12 +283,9 @@ class Block implements IBlock {
     return { children, props };
   }
 
-  show() {
-    this.getContent().classList.remove("hidden");
-  }
-
-  hide() {
-    this.getContent().classList.add("hidden");
+  unmount() {
+    this._removeEvents();
+    this.getContent().remove();
   }
 }
 

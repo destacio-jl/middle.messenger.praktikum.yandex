@@ -39,7 +39,7 @@ export default class Route {
 
   leave() {
     if (this._block) {
-      this._block.hide();
+      this._block.unmount();
     }
   }
 
@@ -50,11 +50,7 @@ export default class Route {
   render() {
     const { rootQuery } = this._props;
 
-    if (this._initialized) {
-      this._block.show();
-    } else {
-      render(rootQuery, this._block);
-      this._initialized = true;
-    }
+    render(rootQuery, this._block);
+    this._initialized = true;
   }
 }
