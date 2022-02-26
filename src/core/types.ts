@@ -11,3 +11,7 @@ export type PopStateEventType = {
 };
 
 export type Callback = (...args: unknown[]) => void;
+
+export type Indexed<T = unknown> = {
+  [key in string]: T;
+};

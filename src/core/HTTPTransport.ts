@@ -1,3 +1,5 @@
+import queryStringify from "../utils/queryStringify";
+
 enum METHODS {
   GET = "GET",
   PUT = "PUT",
@@ -13,16 +15,6 @@ type FetchOptions = {
 export interface RequestOptions {
   method: METHODS;
   data?: { [key: string]: string };
-}
-
-function queryStringify(data: { [key: string]: string }): string {
-  return Object.entries(data).reduce(
-    (query, [key, value]) =>
-      query.length === 1
-        ? `${query}${key}=${value}`
-        : `${query}&${key}=${value}`,
-    `?`
-  );
 }
 
 class HTTPTransport {
