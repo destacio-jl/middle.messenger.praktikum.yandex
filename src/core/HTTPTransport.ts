@@ -18,10 +18,15 @@ export interface RequestOptions {
 }
 
 class HTTPTransport {
+  _host = "/";
+
+  constructor(host = "/") {
+    this._host = host;
+  }
+
   get = (url: string, options: FetchOptions = {}) => {
     const { data } = options;
     const query = data ? queryStringify(data) : ``;
-    console.log(`get`, `${url}${query}`);
     return this.request(
       `${url}${query}`,
       { ...options, method: METHODS.GET },
@@ -56,11 +61,14 @@ class HTTPTransport {
   request = (url: string, options: RequestOptions, timeout = 5000) => {
     const { method, data } = options;
 
+    const fullUrl = `${this._host}${url}`;
+
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
 
-      xhr.open(method, url);
+      xhr.open(method, fullUrl);
       xhr.setRequestHeader(`content-type`, `application/json`);
+      xhr.withCredentials = true;
 
       xhr.onload = function (e) {
         const statusCode = Number(xhr.status.toString().charAt(0));

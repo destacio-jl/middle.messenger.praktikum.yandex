@@ -1,7 +1,9 @@
+import { User } from "../api/AuthAPI";
+import set from "../utils/set";
 import EventBus from "./EventBus";
 
 interface IStore {
-  test?: string;
+  user?: User;
 }
 
 export enum StoreEvents {
@@ -16,7 +18,7 @@ class Store extends EventBus {
   }
 
   public set(path: string, value: unknown) {
-    // TODO: set(this.state, path, value);
+    set(this.state, path, value);
     this.emit(StoreEvents.Updated);
   }
 }

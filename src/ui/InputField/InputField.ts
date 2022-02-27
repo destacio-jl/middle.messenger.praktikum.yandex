@@ -22,12 +22,15 @@ const CLASSES = {
 class InputField extends Block {
   props: InputFieldProps;
 
+  name: ``;
+
   validate() {
     return null;
   }
 
   constructor(props: InputFieldProps, settings?: BlockSettings) {
     const {
+      name,
       value,
       disabled,
       variant,
@@ -74,6 +77,7 @@ class InputField extends Block {
       }
     );
 
+    this.name = name;
     this.validate = validateAndShowError;
   }
 

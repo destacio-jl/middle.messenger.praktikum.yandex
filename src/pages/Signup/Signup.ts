@@ -11,6 +11,9 @@ import {
 import isEmpty from "../../utils/isEmpty";
 import Router from "../../core/Router";
 import { ROOT_QUERY, ROUTES } from "../../const";
+import { SignupApiData, SIGNUP_API_FIELDS } from "../../api/AuthAPI";
+import { FormError } from "../../core/types";
+import signup from "../../core/controllers/auth/signup";
 
 const inputSettings = {
   withInternalID: true,
@@ -18,47 +21,54 @@ const inputSettings = {
 
 const FIELDS_PROPS = {
   EMAIL: {
+    value: "te333s23414123412t@test.com",
     type: "email",
     label: "Почта",
-    name: "email",
+    name: SIGNUP_API_FIELDS.EMAIL,
     validators: emailValidators,
   },
   LOGIN: {
+    value: "te333s1234234134324t",
     type: "text",
     label: "Логин",
-    name: "login",
+    name: SIGNUP_API_FIELDS.LOGIN,
     validators: loginValidators,
   },
   FIRST_NAME: {
+    value: "Тест",
     type: "text",
     label: "Имя",
-    name: "first_name",
+    name: SIGNUP_API_FIELDS.FIRST_NAME,
     validators: nameValidators,
   },
   SECOND_NAME: {
+    value: "Тест",
     type: "text",
     label: "Фамилия",
-    name: "second_name",
+    name: SIGNUP_API_FIELDS.SECOND_NAME,
     validators: nameValidators,
   },
   PHONE: {
+    value: "999999898999",
     type: "text",
     label: "Телефон",
-    name: "phone",
+    name: SIGNUP_API_FIELDS.PHONE,
     validators: phoneValidators,
   },
   PASSWORD: {
+    value: "Тестаааывавыа32423234",
     type: "password",
     label: "Пароль",
-    name: "password",
+    name: SIGNUP_API_FIELDS.PASSWORD,
     validators: passwordValidators,
   },
-  PASSWORD_SECOND: {
-    type: "password",
-    label: "Пароль (ещё раз)",
-    name: "password_second",
-    validators: passwordValidators,
-  },
+  // TODO: validation depending on other form fields
+  // PASSWORD_SECOND: {
+  //   type: "password",
+  //   label: "Пароль (ещё раз)",
+  //   name: "password_second",
+  //   validators: passwordValidators,
+  // },
 };
 
 const router = new Router(ROOT_QUERY);
@@ -69,10 +79,11 @@ const firstNameField = new InputField(FIELDS_PROPS.FIRST_NAME, inputSettings);
 const secondNameField = new InputField(FIELDS_PROPS.SECOND_NAME, inputSettings);
 const phoneField = new InputField(FIELDS_PROPS.PHONE, inputSettings);
 const passwordField = new InputField(FIELDS_PROPS.PASSWORD, inputSettings);
-const passwordSecondField = new InputField(
-  FIELDS_PROPS.PASSWORD_SECOND,
-  inputSettings
-);
+// TODO: validation depending on other form fields
+// const passwordSecondField = new InputField(
+//   FIELDS_PROPS.PASSWORD_SECOND,
+//   inputSettings
+// );
 
 const fields = [
   emailField,
@@ -81,35 +92,39 @@ const fields = [
   secondNameField,
   phoneField,
   passwordField,
-  passwordSecondField,
 ];
+
+const onSignupHandler = () => {
+  router.go(ROUTES.CHATS);
+};
 
 const onSubmitHandler = (e: SubmitEvent) => {
   e.preventDefault();
 
-  const errors = [];
+  const errors: FormError[] = [];
 
-  const formData = fields.reduce((data, field) => {
-    field.validate();
+  const formData = fields.reduce(
+    (data: Partial<SignupApiData>, field: InputField) => {
+      field.validate();
 
-    if (field.props.errorText) {
-      errors.push({
-        name: field.props.name,
-        value: field.value,
-        error: field.props.errorText,
-      });
-    }
+      if (field.props.errorText) {
+        errors.push({
+          name: field.props.name,
+          value: field.value,
+          error: field.props.errorText,
+        });
+      }
 
-    return {
-      ...data,
-      [`${field.props.name}`]: field.value,
-    };
-  }, {});
-
-  console.log(formData);
+      return {
+        ...data,
+        [`${field.props.name}`]: field.value,
+      };
+    },
+    {}
+  ) as SignupApiData;
 
   if (isEmpty(errors)) {
-    router.go(ROUTES.CHATS);
+    signup(formData, onSignupHandler);
   }
 };
 
@@ -129,6 +144,6 @@ const props: AuthPageProps = {
   },
 };
 
-const signInPage = new AuthPage(props);
+const signupPage = new AuthPage(props);
 
-export default signInPage;
+export default signupPage;

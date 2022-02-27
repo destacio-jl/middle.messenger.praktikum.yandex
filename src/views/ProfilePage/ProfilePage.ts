@@ -15,6 +15,14 @@ class ProfilePage extends Block {
     super("div", { ...props, backLink }, { className: `profile` });
   }
 
+  componentDidMount() {
+    const { didMountCb } = this.props;
+
+    if (didMountCb && typeof didMountCb === "function") {
+      didMountCb();
+    }
+  }
+
   render() {
     return this.compile(template as HandlebarsTemplateDelegate, this.props);
   }

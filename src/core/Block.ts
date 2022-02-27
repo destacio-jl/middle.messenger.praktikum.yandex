@@ -109,20 +109,20 @@ class Block implements IBlock {
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
+  dispatchComponentDidMount() {
+    this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+  }
+
   _componentDidMount() {
     this.componentDidMount();
 
-    Object.values(this.children).forEach((child) => {
-      child.dispatchComponentDidMount();
-    });
+    // Object.values(this.children).forEach((child) => {
+    //   child.dispatchComponentDidMount();
+    // });
   }
 
   componentDidMount(oldProps?: Props) {
-    console.log("did mount, props:", oldProps);
-  }
-
-  dispatchComponentDidMount() {
-    this._eventBus().emit(Block.EVENTS.FLOW_CDM);
+    // console.log("did mount, props:", oldProps);
   }
 
   _componentDidUpdate(oldProps, newProps) {
@@ -148,6 +148,8 @@ class Block implements IBlock {
   }
 
   _render() {
+    if (!this._element) return;
+
     const block = this.render();
 
     this._removeEvents();
@@ -245,7 +247,7 @@ class Block implements IBlock {
     const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {
-      this._element.addEventListener(
+      this._element?.addEventListener(
         eventName,
         events[eventName] as EventListenerOrEventListenerObject,
         true
@@ -257,7 +259,7 @@ class Block implements IBlock {
     const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {
-      this._element.removeEventListener(
+      this._element?.removeEventListener(
         eventName,
         events[eventName] as EventListenerOrEventListenerObject
       );

@@ -51,6 +51,6 @@ export default class Route {
     const { rootQuery } = this._props;
 
     render(rootQuery, this._block);
-    this._initialized = true;
+    this._block.dispatchComponentDidMount();
   }
 }

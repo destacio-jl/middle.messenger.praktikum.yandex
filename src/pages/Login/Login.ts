@@ -1,3 +1,4 @@
+import { LoginApiData } from "../../api/AuthAPI";
 import AuthPage, { AuthPageProps } from "../../views/AuthPage";
 import InputField from "../../ui/InputField";
 import Button from "../../ui/Button";
@@ -5,6 +6,7 @@ import { loginValidators, passwordValidators } from "../../utils/validators";
 import isEmpty from "../../utils/isEmpty";
 import Router from "../../core/Router";
 import { ROOT_QUERY, ROUTES } from "../../const";
+import login from "../../core/controllers/auth/login";
 
 const inputSettings = {
   withInternalID: true,
@@ -39,6 +41,10 @@ const link = new Button(
   { className: "auth__link" }
 );
 
+const onSuccessfulLoginHandler = () => {
+  router.go(ROUTES.CHATS);
+};
+
 const onSubmitHandler = (e: SubmitEvent) => {
   e.preventDefault();
 
@@ -59,10 +65,10 @@ const onSubmitHandler = (e: SubmitEvent) => {
       ...data,
       [`${field.props.name}`]: field.value,
     };
-  }, {});
+  }, {}) as LoginApiData;
 
   if (isEmpty(errors)) {
-    router.go(ROUTES.CHATS);
+    login(formData, onSuccessfulLoginHandler);
   }
 };
 

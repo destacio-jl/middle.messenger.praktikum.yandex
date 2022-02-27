@@ -1,7 +1,13 @@
+import { StoreEvents } from "./../../core/Store";
 import ProfilePage, { ProfilePageProps } from "../../views/ProfilePage";
 import InputField, { INPUT_FIELD_VARIANTS } from "../../ui/InputField";
 import Button from "../../ui/Button";
 import { ROUTES } from "../../const";
+import Store from "../../core/Store";
+import { updateFieldsValues } from "./utils";
+import getUserInfo from "../../core/controllers/auth/getUserInfo";
+import { userModel } from "../../api/AuthAPI";
+import doLogoutScenario from "../../core/controllers/auth/logout";
 
 const inputSettings = {
   withInternalID: true,
@@ -13,48 +19,42 @@ const FIELDS_PROPS = {
   EMAIL: {
     type: "email",
     label: "Почта",
-    name: "email",
-    value: "pochta@yandex.ru",
+    name: userModel.email,
     disabled: true,
     variant,
   },
   LOGIN: {
     type: "text",
     label: "Логин",
-    name: "login",
-    value: "ivanivanov",
+    name: userModel.login,
     disabled: true,
     variant,
   },
   FIRST_NAME: {
     type: "text",
     label: "Имя",
-    name: "first_name",
-    value: "Иван",
+    name: userModel.firstName,
     disabled: true,
     variant,
   },
   SECOND_NAME: {
     type: "text",
     label: "Фамилия",
-    name: "second_name",
-    value: "Иванов",
+    name: userModel.secondName,
     disabled: true,
     variant,
   },
   DISPLAY_NAME: {
     type: "text",
     label: "Имя в чате",
-    name: "display_name",
-    value: "Иван",
+    name: userModel.displayName,
     disabled: true,
     variant,
   },
   PHONE: {
     type: "text",
     label: "Телефон",
-    name: "phone",
-    value: "+7 (909) 967 30 30",
+    name: userModel.phone,
     disabled: true,
     variant,
   },
@@ -67,6 +67,34 @@ const secondName = new InputField(FIELDS_PROPS.SECOND_NAME, inputSettings);
 const displayName = new InputField(FIELDS_PROPS.DISPLAY_NAME, inputSettings);
 const phoneName = new InputField(FIELDS_PROPS.PHONE, inputSettings);
 
+const fields = [
+  emailField,
+  loginField,
+  firstNameField,
+  secondName,
+  displayName,
+  phoneName,
+];
+
+const updateFields = () => {
+  const userFromStore = Store.getState().user;
+
+  if (userFromStore) {
+    updateFieldsValues(fields, userFromStore);
+  } else {
+    getUserInfo();
+  }
+};
+
+const logoutClickHandler = () => {
+  doLogoutScenario();
+};
+
+const componentDidMount = () => {
+  Store.on(StoreEvents.Updated, updateFields);
+  updateFields();
+};
+
 const editProfileAction = new Button(
   { text: "Изменить данные", href: ROUTES.CHANGE_PROFILE },
   { className: "profile__action" }
@@ -76,22 +104,21 @@ const editPasswordAction = new Button(
   { className: "profile__action" }
 );
 const logoutAction = new Button(
-  { text: "Выйти", href: ROUTES.LOGIN },
+  {
+    text: "Выйти",
+    events: {
+      click: logoutClickHandler,
+    },
+  },
   { className: ["profile__action", "profile__action_danger"] }
 );
 
 const props: ProfilePageProps = {
   name: `Иван`,
   backLinkRoute: ROUTES.CHATS,
-  fields: [
-    emailField,
-    loginField,
-    firstNameField,
-    secondName,
-    displayName,
-    phoneName,
-  ],
+  fields,
   actions: [editProfileAction, editPasswordAction, logoutAction],
+  didMountCb: componentDidMount,
 };
 
 const profilePage = new ProfilePage(props);

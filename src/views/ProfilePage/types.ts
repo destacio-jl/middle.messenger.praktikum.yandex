@@ -1,3 +1,4 @@
+import { StoreEvents } from "../../core/Store";
 import Button from "../../ui/Button";
 import InputField from "../../ui/InputField/InputField";
 
@@ -9,5 +10,6 @@ export type ProfilePageProps = {
   editable?: boolean;
   events?: {
     submit?: (e: SubmitEvent) => void;
+    [StoreEvents.Updated]?: () => void;
   };
 };

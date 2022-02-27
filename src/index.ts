@@ -7,13 +7,13 @@ import changeProfilePage from "./pages/ChangeProfile/ChangeProfile";
 import loginPage from "./pages/Login/Login";
 import mainPage from "./pages/main/Main";
 import profilePage from "./pages/Profile/Profile";
-import signInPage from "./pages/SignIn/SignIn";
+import signupPage from "./pages/Signup/Signup";
 
 const router = new Router(".app");
 
 router
   .use(ROUTES.LOGIN, loginPage)
-  .use(ROUTES.SIGN_IN, signInPage)
+  .use(ROUTES.SIGN_IN, signupPage)
   .use(ROUTES.ERROR_404, page404)
   .use(ROUTES.ERROR_500, page500)
   .use(ROUTES.PROFILE, profilePage)
