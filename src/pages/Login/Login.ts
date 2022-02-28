@@ -1,12 +1,12 @@
 import { LoginApiData } from "../../api/AuthAPI";
-import AuthPage, { AuthPageProps } from "../../views/AuthPage";
-import InputField from "../../ui/InputField";
-import Button from "../../ui/Button";
+import AuthPage, { AuthPageProps } from "../../views/pages/AuthPage";
+import InputField from "../../views/ui/InputField";
+import Button from "../../views/ui/Button";
 import { loginValidators, passwordValidators } from "../../utils/validators";
 import isEmpty from "../../utils/isEmpty";
 import Router from "../../core/Router";
 import { ROOT_QUERY, ROUTES } from "../../const";
-import login from "../../core/controllers/auth/login";
+import login from "../../controllers/auth/login";
 
 const inputSettings = {
   withInternalID: true,

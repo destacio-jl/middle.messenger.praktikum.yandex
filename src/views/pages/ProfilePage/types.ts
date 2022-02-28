@@ -1,6 +1,6 @@
-import { StoreEvents } from "../../core/Store";
+import { StoreEvents } from "../../../core/Store";
 import Button from "../../ui/Button";
-import InputField from "../../ui/InputField/InputField";
+import InputField from "../../ui/InputField";
 
 export type ProfilePageProps = {
   name: string;
@@ -12,4 +12,10 @@ export type ProfilePageProps = {
     submit?: (e: SubmitEvent) => void;
     [StoreEvents.Updated]?: () => void;
   };
+};
+
+export type ChangeAvatarProps = {
+  title: string;
+  fileName?: string;
+  error?: string;
 };

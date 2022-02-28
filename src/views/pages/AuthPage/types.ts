@@ -1,5 +1,5 @@
-import Button from "../../ui/Button";
-import InputField from "../../ui/InputField/InputField";
+import Button from "../../views/uiButton";
+import InputField from "../../views/uiInputField/InputField";
 
 export type AuthPageProps = {
   name: string;

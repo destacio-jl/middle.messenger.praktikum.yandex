@@ -3,10 +3,7 @@
 </div>
 <div class="profile__content">
   <form class="profile__form">
-    <div class="profile__avatar">
-      <input id="avatar" class="profile__avatar" name="avatar" type="file" />
-      <label for="avatar"></label>
-    </div>
+    {{{ changeAvatarButton }}}
     <h3 class="profile__name">{{ name }}</h3>
     <div class="profile__fields">{{{ fields }}}</div>
     {{#if editable}}

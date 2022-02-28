@@ -1,6 +1,6 @@
-import Store from "../../Store";
-import { Callback, Response } from "../../types";
-import AuthAPI, { User } from "../../../api/AuthAPI";
+import Store from "../../core/Store";
+import { Callback, Response } from "../../core/types";
+import AuthAPI, { User } from "../../api/AuthAPI";
 
 const getUserInfo = (callback: Callback = null) => {
   AuthAPI.user()

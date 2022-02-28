@@ -1,6 +1,6 @@
-import { ROOT_QUERY } from "../../const";
-import Block, { BlockSettings } from "../../core/Block";
-import Router from "../../core/Router";
+import { ROOT_QUERY } from "../../../const";
+import Block, { BlockSettings } from "../../../core/Block";
+import Router from "../../../core/Router";
 import template from "./Button.hbs";
 import { ButtonProps } from "./types";
 

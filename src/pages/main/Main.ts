@@ -1,6 +1,7 @@
-import MainPage, { MainPageProps } from "../../views/MainPage";
-import InputField, { INPUT_FIELD_VARIANTS } from "../../ui/InputField";
 import { validateRequired } from "../../utils/validators";
+import MainPage from "../../views/pages/MainPage/MainPage";
+import { MainPageProps } from "../../views/pages/MainPage/types";
+import InputField, { INPUT_FIELD_VARIANTS } from "../../views/ui/InputField";
 
 const chats = [
   {

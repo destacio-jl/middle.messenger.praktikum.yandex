@@ -1,4 +1,4 @@
-import { Validator } from "../../utils/validators";
+import { Validator } from "../../../utils/validators";
 
 export enum INPUT_FIELD_VARIANTS {
   AUTH = `auth`,

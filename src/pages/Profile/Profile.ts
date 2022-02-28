@@ -1,13 +1,12 @@
-import { StoreEvents } from "./../../core/Store";
-import ProfilePage, { ProfilePageProps } from "../../views/ProfilePage";
-import InputField, { INPUT_FIELD_VARIANTS } from "../../ui/InputField";
-import Button from "../../ui/Button";
-import { ROUTES } from "../../const";
-import Store from "../../core/Store";
-import { updateFieldsValues } from "./utils";
-import getUserInfo from "../../core/controllers/auth/getUserInfo";
 import { userModel } from "../../api/AuthAPI";
-import doLogoutScenario from "../../core/controllers/auth/logout";
+import { ROUTES } from "../../const";
+import getUserInfo from "../../controllers/auth/getUserInfo";
+import logout from "../../controllers/auth/logout";
+import Store, { StoreEvents } from "../../core/Store";
+import ProfilePage, { ProfilePageProps } from "../../views/pages/ProfilePage";
+import Button from "../../views/ui/Button";
+import InputField, { INPUT_FIELD_VARIANTS } from "../../views/ui/InputField";
+import { updateFieldsValues } from "./utils";
 
 const inputSettings = {
   withInternalID: true,
@@ -87,7 +86,7 @@ const updateFields = () => {
 };
 
 const logoutClickHandler = () => {
-  doLogoutScenario();
+  logout();
 };
 
 const componentDidMount = () => {

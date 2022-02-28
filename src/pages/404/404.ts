@@ -1,4 +1,4 @@
-import ErrorPage from "../../views/ErrorPage";
+import ErrorPage from "../../views/pages/ErrorPage/ErrorPage";
 
 const props = {
   code: 404,

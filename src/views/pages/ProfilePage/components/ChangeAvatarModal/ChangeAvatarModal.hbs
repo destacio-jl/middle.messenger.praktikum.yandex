@@ -1,0 +1,10 @@
+<h4 class="change-avatar__title">{{ title }}</h4>
+{{#if fileName}}
+  {{ fileName }}
+{{else}}
+  <input id="avatar" class="profile__avatar" name="avatar" type="file" />
+{{/if}}
+<button class="profile__action-button" type="submit">Поменять</button>
+{{#if error}}
+  <span class="change-avatar__error">{{ error }}</span>
+{{/if}}

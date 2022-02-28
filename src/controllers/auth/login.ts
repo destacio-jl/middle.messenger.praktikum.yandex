@@ -1,5 +1,5 @@
 import { Callback } from "../../types";
-import AuthAPI, { LoginApiData } from "../../../api/AuthAPI";
+import AuthAPI, { LoginApiData } from "../../api/AuthAPI";
 import getUserInfo from "./getUserInfo";
 
 const login = (formData: LoginApiData, callback: Callback = null) => {

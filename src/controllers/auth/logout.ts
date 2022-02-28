@@ -1,6 +1,6 @@
-import { ROOT_QUERY, ROUTES } from "../../../const";
-import Router from "../../Router";
-import AuthAPI from "../../../api/AuthAPI";
+import AuthAPI from "../../api/AuthAPI";
+import { ROOT_QUERY, ROUTES } from "../../const";
+import Router from "../../core/Router";
 
 const router = new Router(ROOT_QUERY);
 

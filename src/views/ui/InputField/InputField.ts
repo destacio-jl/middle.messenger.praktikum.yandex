@@ -1,5 +1,5 @@
-import Block, { BlockSettings } from "../../core/Block";
 import { compile } from "handlebars";
+import Block, { BlockSettings } from "../../../core/Block";
 import inputFieldTemplate from "./InputField.hbs";
 import profileFieldTemplate from "./ProfileField.hbs";
 import roundedFieldTemplate from "./RoundedInput.hbs";
@@ -46,7 +46,7 @@ class InputField extends Block {
 
       const errorText = validators.reduce((error, validator) => {
         const currentError = validator(currentValue);
-        return error || currentError;
+        return String(error || currentError);
       }, ``);
 
       const newProps = {

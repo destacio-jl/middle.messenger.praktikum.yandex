@@ -1,8 +1,8 @@
 import { MainPageProps } from "./types";
 import template from "./MainPage.hbs";
-import Block from "../../core/Block";
 import Button from "../../ui/Button";
-import { ROUTES } from "../../const";
+import { ROUTES } from "../../../const";
+import Block from "../../../core/Block";
 
 class MainPage extends Block {
   constructor(props: MainPageProps) {

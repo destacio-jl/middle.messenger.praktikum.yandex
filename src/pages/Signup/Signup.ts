@@ -1,19 +1,19 @@
-import AuthPage, { AuthPageProps } from "../../views/AuthPage";
-import InputField from "../../ui/InputField";
-import Button from "../../ui/Button";
+import { SignupApiData, SIGNUP_API_FIELDS } from "../../api/AuthAPI";
+import { ROOT_QUERY, ROUTES } from "../../const";
+import Router from "../../core/Router";
+import { FormError } from "../../core/types";
+import isEmpty from "../../utils/isEmpty";
+import signup from "../../controllers/auth/signup";
 import {
+  emailValidators,
   loginValidators,
   nameValidators,
   passwordValidators,
-  emailValidators,
   phoneValidators,
 } from "../../utils/validators";
-import isEmpty from "../../utils/isEmpty";
-import Router from "../../core/Router";
-import { ROOT_QUERY, ROUTES } from "../../const";
-import { SignupApiData, SIGNUP_API_FIELDS } from "../../api/AuthAPI";
-import { FormError } from "../../core/types";
-import signup from "../../core/controllers/auth/signup";
+import InputField from "../../views/ui/InputField";
+import Button from "../../views/ui/Button";
+import AuthPage, { AuthPageProps } from "../../views/pages/AuthPage";
 
 const inputSettings = {
   withInternalID: true,

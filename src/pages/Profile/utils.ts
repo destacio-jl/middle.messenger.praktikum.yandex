@@ -1,5 +1,5 @@
 import { User } from "../../api/AuthAPI";
-import InputField from "../../ui/InputField";
+import InputField from "../../views/ui/InputField";
 
 export const updateFieldsValues = (
   fields: InputField[],

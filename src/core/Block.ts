@@ -59,6 +59,7 @@ class Block implements IBlock {
     settings: BlockSettings = {}
   ) {
     const { children, props } = this._getChildren(propsAndChildren);
+
     this.children = children;
 
     const eventBus = new EventBus();
@@ -73,8 +74,10 @@ class Block implements IBlock {
     if (withInternalID) {
       this._id = String(makeUUID());
       this.props = this._makePropsProxy({ ...props, __id: this._id });
+      this.children = this._makePropsProxy({ ...children });
     } else {
       this.props = this._makePropsProxy(props);
+      this.children = this._makePropsProxy({ ...children });
     }
 
     this.eventBus = () => eventBus;
@@ -126,7 +129,6 @@ class Block implements IBlock {
   }
 
   _componentDidUpdate(oldProps, newProps) {
-    console.log("CDU");
     const response = this.componentDidUpdate(oldProps, newProps);
   }
 
@@ -139,7 +141,11 @@ class Block implements IBlock {
       return;
     }
 
-    Object.assign(this.props, nextProps);
+    const { children, props } = this._getChildren(nextProps);
+
+    Object.assign(this.props, props);
+    Object.assign(this.children, children);
+
     this.eventBus().emit(Block.EVENTS.FLOW_CDU);
   };
 
@@ -157,7 +163,7 @@ class Block implements IBlock {
     if (typeof block === "string") {
       this._element.innerHTML = block;
     } else {
-      this._element.appendChild(block.content);
+      this._element.replaceChildren(block.content);
     }
 
     this._addEvents();

@@ -1,5 +1,5 @@
-import ProfilePage, { ProfilePageProps } from "../../views/ProfilePage";
-import InputField, { INPUT_FIELD_VARIANTS } from "../../ui/InputField";
+import ProfilePage, { ProfilePageProps } from "../../views/pages/ProfilePage";
+import InputField, { INPUT_FIELD_VARIANTS } from "../../views/ui/InputField";
 import {
   emailValidators,
   loginValidators,
