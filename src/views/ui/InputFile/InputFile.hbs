@@ -1,0 +1,6 @@
+{{#if fileName}}
+  <span class="input-file__name">{{ fileName }}</span>
+{{else}}
+  <span class="input-file__name no-file">Выбрать файл на компьютере</span>
+{{/if}}
+<input class="input-file__input" id="avatar" name="{{ name }}" type="file" />

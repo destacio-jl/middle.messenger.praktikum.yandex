@@ -11,6 +11,7 @@ export type BlockSettings = {
   withInternalID?: boolean;
   className?: string | string[];
   attributes?: { [key: string]: string };
+  style?: string;
 };
 
 type Meta = {
@@ -231,7 +232,7 @@ class Block implements IBlock {
   }
 
   _createDocumentElement(tagName: string, className?: string) {
-    const { attributes } = this._meta.settings;
+    const { attributes, style } = this._meta.settings;
     const element = document.createElement(tagName);
 
     if (attributes)
@@ -246,6 +247,7 @@ class Block implements IBlock {
         element.classList.add(cl);
       });
     if (this._id) element.setAttribute("data-id", this._id);
+    if (style) element.style.cssText = style;
     return element;
   }
 

@@ -1,5 +1,5 @@
-import { Callback, Response } from "../../types";
 import AuthAPI, { SignupApiData, SignupResponse } from "../../api/AuthAPI";
+import { Callback, Response } from "../../core/types";
 import getUserInfo from "./getUserInfo";
 
 const signup = (formData: SignupApiData, callback: Callback = null) => {

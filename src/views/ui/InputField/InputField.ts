@@ -46,7 +46,7 @@ class InputField extends Block {
 
       const errorText = validators.reduce((error, validator) => {
         const currentError = validator(currentValue);
-        return String(error || currentError);
+        return error || currentError;
       }, ``);
 
       const newProps = {

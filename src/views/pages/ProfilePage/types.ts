@@ -8,6 +8,7 @@ export type ProfilePageProps = {
   backLinkRoute: string;
   actions?: Button[];
   editable?: boolean;
+  avatar?: string;
   events?: {
     submit?: (e: SubmitEvent) => void;
     [StoreEvents.Updated]?: () => void;

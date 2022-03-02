@@ -14,6 +14,7 @@ type FetchOptions = {
 
 export interface RequestOptions {
   method: METHODS;
+  formData?: boolean;
   data?: { [key: string]: string };
 }
 
@@ -35,6 +36,7 @@ class HTTPTransport {
   };
 
   put = (url: string, options: FetchOptions = {}) => {
+    console.log({ options });
     return this.request(
       url,
       { ...options, method: METHODS.PUT },
@@ -59,7 +61,9 @@ class HTTPTransport {
   };
 
   request = (url: string, options: RequestOptions, timeout = 5000) => {
-    const { method, data } = options;
+    const { method, formData, data } = options;
+
+    console.log(options);
 
     const fullUrl = `${this._host}${url}`;
 
@@ -67,10 +71,14 @@ class HTTPTransport {
       const xhr = new XMLHttpRequest();
 
       xhr.open(method, fullUrl);
-      xhr.setRequestHeader(`content-type`, `application/json`);
+
+      if (!formData) {
+        xhr.setRequestHeader(`content-type`, `application/json`);
+      }
+
       xhr.withCredentials = true;
 
-      xhr.onload = function (e) {
+      xhr.onload = () => {
         const statusCode = Number(xhr.status.toString().charAt(0));
 
         if (statusCode === 2) {
@@ -90,7 +98,7 @@ class HTTPTransport {
       if (method === METHODS.GET || !data) {
         xhr.send();
       } else {
-        xhr.send(JSON.stringify(data));
+        xhr.send(formData ? data : JSON.stringify(data));
       }
     });
   };
