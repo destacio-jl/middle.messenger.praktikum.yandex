@@ -1,4 +1,3 @@
-import { LoginApiData } from "../../api/AuthAPI";
 import AuthPage, { AuthPageProps } from "../../views/pages/AuthPage";
 import InputField from "../../views/ui/InputField";
 import Button from "../../views/ui/Button";
@@ -7,6 +6,7 @@ import isEmpty from "../../utils/isEmpty";
 import Router from "../../core/Router";
 import { ROOT_QUERY, ROUTES } from "../../const";
 import login from "../../controllers/auth/login";
+import { getFormData } from "../../utils/getFormData";
 
 const inputSettings = {
   withInternalID: true,
@@ -48,24 +48,7 @@ const onSuccessfulLoginHandler = () => {
 const onSubmitHandler = (e: SubmitEvent) => {
   e.preventDefault();
 
-  const errors = [];
-
-  const formData = fields.reduce((data, field) => {
-    field.validate();
-
-    if (field.props.errorText) {
-      errors.push({
-        name: field.props.name,
-        value: field.value,
-        error: field.props.errorText,
-      });
-    }
-
-    return {
-      ...data,
-      [`${field.props.name}`]: field.value,
-    };
-  }, {}) as LoginApiData;
+  const [formData, errors] = getFormData(fields);
 
   if (isEmpty(errors)) {
     login(formData, onSuccessfulLoginHandler);

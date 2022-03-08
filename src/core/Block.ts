@@ -2,6 +2,7 @@ import EventBus, { IEventBus } from "./EventBus";
 import { v4 as makeUUID } from "uuid";
 import { compile } from "handlebars";
 import { Callback } from "./types";
+import isArray from "../utils/isArray";
 
 type Props = {
   [key: string]: unknown;
@@ -52,7 +53,7 @@ class Block implements IBlock {
 
   _meta: Meta = null;
 
-  children: { [key: string]: IBlock } = {};
+  children: { [key: string]: IBlock | IBlock[] } = {};
 
   constructor(
     tagName = "div",
@@ -120,20 +121,33 @@ class Block implements IBlock {
   _componentDidMount() {
     this.componentDidMount();
 
-    // Object.values(this.children).forEach((child) => {
-    //   child.dispatchComponentDidMount();
-    // });
+    Object.values(this.children).forEach((child) => {
+      const isBlockArray = isArray(child);
+      if (isBlockArray) {
+        child.forEach((block: IBlock) => {
+          block.dispatchComponentDidMount();
+        });
+      } else {
+        (child as IBlock).dispatchComponentDidMount();
+      }
+    });
   }
 
   componentDidMount(oldProps?: Props) {
     // console.log("did mount, props:", oldProps);
   }
 
-  _componentDidUpdate(oldProps, newProps) {
+  _componentDidUpdate(oldProps: Props, newProps: Props) {
     const response = this.componentDidUpdate(oldProps, newProps);
+
+    if (!response) {
+      return;
+    }
+
+    this._render();
   }
 
-  componentDidUpdate(oldProps, newProps) {
+  componentDidUpdate(oldProps: Props, newProps: Props) {
     return true;
   }
 
@@ -142,12 +156,19 @@ class Block implements IBlock {
       return;
     }
 
+    const oldProps = { ...this.props };
+    const oldChildren = { ...this.children };
+
     const { children, props } = this._getChildren(nextProps);
 
     Object.assign(this.props, props);
     Object.assign(this.children, children);
 
-    this.eventBus().emit(Block.EVENTS.FLOW_CDU);
+    this.eventBus().emit(
+      Block.EVENTS.FLOW_CDU,
+      { ...oldProps, ...oldChildren },
+      { ...props, ...children }
+    );
   };
 
   get element() {
@@ -205,7 +226,9 @@ class Block implements IBlock {
           const stub = fragment.content.querySelector(
             `[data-id="${block._id}"]`
           );
-          stub.replaceWith(block.getContent());
+          if (stub) {
+            stub.replaceWith(block.getContent());
+          }
         });
       } else {
         const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
@@ -218,11 +241,6 @@ class Block implements IBlock {
 
   _makePropsProxy(props: Props): Props {
     const proxyProps = new Proxy<Props>(props, {
-      set: (target, prop, value) => {
-        target[prop] = value;
-        this._render();
-        return true;
-      },
       deleteProperty() {
         throw new Error(`Удаление запрещено`);
       },

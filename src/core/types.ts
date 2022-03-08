@@ -25,3 +25,9 @@ export type FormError = {
 export type Response = {
   responseText: string;
 };
+
+export type FormError = {
+  name: string;
+  value: string;
+  error: string;
+};

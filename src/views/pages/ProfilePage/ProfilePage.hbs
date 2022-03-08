@@ -6,11 +6,14 @@
     {{{ changeAvatarButton }}}
     <h3 class="profile__name">{{ name }}</h3>
     <div class="profile__fields">{{{ fields }}}</div>
-    {{#if editable}}
+    {{#if editableFields}}
       <button class="profile__action-button" type="submit">Сохранить</button>
     {{/if}}
   </form>
   <div class="profile__actions">
-    {{{ actions }}}
+    {{#if editableFields}}
+    {{else}}
+      {{{ actions }}}
+    {{/if}}
   </div>
 </div>

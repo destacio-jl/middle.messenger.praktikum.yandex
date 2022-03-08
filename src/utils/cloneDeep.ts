@@ -2,7 +2,7 @@ import isArray from "./isArray";
 import isDomElement from "./isDomElement";
 import isObject from "./isObject";
 
-function clone(item: unknown): unknown {
+function cloneDeep(item: unknown): unknown {
   if (!item) {
     return item;
   } // null, undefined values check
@@ -24,7 +24,7 @@ function clone(item: unknown): unknown {
   if (isArray(item)) {
     result = [];
     item.forEach((child, index) => {
-      result[index] = clone(child);
+      result[index] = cloneDeep(child);
     });
     return result;
   }
@@ -41,7 +41,7 @@ function clone(item: unknown): unknown {
         // it is an object literal
         result = {};
         Object.keys(item).forEach((key) => {
-          result[key] = clone(item[key]);
+          result[key] = cloneDeep(item[key]);
         });
       }
     } else {
