@@ -1,9 +1,14 @@
 import { User } from "../api/AuthAPI";
+import { ActiveChatMessage, Chat } from "../api/ChatAPI";
 import set from "../utils/set";
 import EventBus from "./EventBus";
 
 interface IStore {
   user?: User;
+  chats?: Chat[];
+  token?: string;
+  socket?: WebSocket;
+  messages?: ActiveChatMessage[];
 }
 
 export enum StoreEvents {

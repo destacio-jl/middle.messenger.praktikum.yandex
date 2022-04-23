@@ -6,6 +6,9 @@ function queryStringify(data: StringIndexed, prefix = ""): string | never {
   }
 
   const result = Object.entries(data).reduce((query, [key, value]) => {
+    if (value === "") {
+      return query;
+    }
     let currentResult = "";
     if (isArrayOrObject(value)) {
       currentResult = queryStringify(
@@ -18,7 +21,7 @@ function queryStringify(data: StringIndexed, prefix = ""): string | never {
         : `${prefix}${key}=${String(value)}`;
     }
 
-    return query.length === 0
+    return query.length === 1
       ? `${query}${currentResult}`
       : `${query}&${currentResult}`;
   }, "?");

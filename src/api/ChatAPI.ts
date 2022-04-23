@@ -1,16 +1,52 @@
 import HTTPTransport from "../core/HTTPTransport";
-import { BaseAPI } from "./BaseAPI";
+import { HOST } from "./const";
 
-const chatAPIInstance = new HTTPTransport("api/v1/chats");
+export type ActiveChatMessage = {
+  chat_id: number;
+  content: string;
+  file: null;
+  id: number;
+  is_read: boolean;
+  time: string;
+  type: string;
+  user_id: number;
+};
 
-class ChatAPI extends BaseAPI {
+type ChatMessage = {
+  user: {
+    first_name: string;
+    second_name: string;
+    avatar: string;
+    email: string;
+    login: string;
+    phone: string;
+  };
+  time: string;
+  content: string;
+};
+
+export type Chat = {
+  id: number;
+  title: string;
+  avatar: string;
+  unread_count: number;
+  last_message: ChatMessage;
+};
+
+const chatAPIInstance = new HTTPTransport(`${HOST}/api/v2/chats`);
+
+class ChatAPI {
   create() {
     return chatAPIInstance.post("/", { title: "string" });
   }
 
-  request() {
-    return chatAPIInstance.get("/full");
+  getChats(title? = "") {
+    return chatAPIInstance.get("", { data: { offset: 0, limit: 10, title } });
+  }
+
+  getToken(chatId: number) {
+    return chatAPIInstance.post(`/token/${chatId}`);
   }
 }
 
-export default ChatAPI;
+export default new ChatAPI();

@@ -4,31 +4,13 @@
     <input type="search" class="chats__search" placeholder="Поиск" />
   </div>
   <div class="chat-list">
-    {{#each chats}}
-      <div class="chat-list__item">
-        <div class="chat-list__avatar"></div>
-        <div class="chat-list__info">
-          <p class="chat-list__name">{{ name }}</p>
-          <p class="chat-list__last">
-            {{#if isAuthor}}
-              <span class="chat-list__you">Вы:</span>
-            {{/if}}
-            {{ message }}
-          </p>
-        </div>
-        <span class="chat-list__time">{{ time }}</span>
-        {{#if unread}}
-          <span class="chat-list__unread">{{ unread }}</span>
-        {{/if}}
-      </div>
-    {{/each}}
+    {{{ chats }}}
   </div>
 </div>
 
-
 <div class="chat">
 
-  {{#if activeChat}}
+  {{#if chatId}}
     <div class="chat__head">
       <div class="chat__info">
         <div class="chat__image"></div>
@@ -38,7 +20,7 @@
     </div>
 
     <div class="chat__messages">
-      {{#each activeChat.messages}}
+      {{#each messages}}
         {{#if date}}
           <p class="chat__date">{{ date }}</p>
         {{/if}}

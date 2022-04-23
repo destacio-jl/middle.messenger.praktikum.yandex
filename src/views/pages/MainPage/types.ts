@@ -1,14 +1,16 @@
-import InputField from "../../views/uiInputField";
+import { ChatListItem } from "./components";
 
-type Chat = {
+export type MainPageChat = {
+  id: number;
   name: string;
   message: string;
   time: string;
   unread: number;
   isAuthor?: boolean;
+  onClick: (id: number) => void;
 };
 
-type Message = {
+export type MappedMessage = {
   time: string;
   content: string;
   date?: string;
@@ -16,11 +18,12 @@ type Message = {
 };
 
 export type MainPageProps = {
-  chats: Chat[];
+  chats: ChatListItem[];
   messageInputField: InputField;
+  messages: MappedMessage[];
+  chatId?: number;
   activeChat?: {
     name: string;
-    messages: Message[];
   };
   events?: {
     submit?: (e: SubmitEvent) => void;

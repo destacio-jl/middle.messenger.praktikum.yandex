@@ -12,7 +12,6 @@ class Modal extends Block {
   };
 
   constructor() {
-    console.log("constructor");
     const settings = {
       className: "modal__content",
     };
@@ -36,7 +35,6 @@ class Modal extends Block {
     this.setProps({ content: null });
     document.querySelector("body").classList.remove(openModalClass);
     document.removeEventListener("mousedown", this._outsideClickListener);
-    this.element.innerHTML = "";
   }
 }
 
