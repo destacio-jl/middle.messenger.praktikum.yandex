@@ -23,5 +23,13 @@
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["error"],
     "no-constructor-return": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.spec.ts"],
+      "rules": {
+        "no-unused-expressions": "off"
+      }
+    }
+]
 }
