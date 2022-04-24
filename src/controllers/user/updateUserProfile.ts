@@ -1,6 +1,6 @@
 import Store from "../../core/Store";
 import { Callback, Response } from "../../core/types";
-import UserAPI, { UpdateUserProfileData } from "../../api/UserApi";
+import UserAPI, { UpdateUserProfileData } from "../../api/UserAPI";
 import { User } from "../../api/AuthAPI";
 
 const updateUserProfile = (
