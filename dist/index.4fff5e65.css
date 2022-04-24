@@ -1,0 +1,2 @@
+.modal{display:none}.modal-open .modal{background-color:rgba(0,0,0,.4);cursor:pointer;height:100%;left:0;position:fixed;top:0;width:100%}.modal-open .modal,.modal__content{align-items:center;display:flex;justify-content:center}.modal__content{background:#fff;border-radius:12px;box-shadow:0 0 6px rgba(0,0,0,.14);cursor:auto;min-height:258px;width:340px}
+/*# sourceMappingURL=index.4fff5e65.css.map */

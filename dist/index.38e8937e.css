@@ -1,0 +1,21 @@
+.input-file {
+  width: 105px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.input-file__name {
+  font-size: 14px;
+  color: #8d8d8d;
+}
+.input-file__name.no-file {
+  color: #3369f3;
+  font-size: 12px;
+  line-height: 16px;
+  text-decoration: underline;
+}
+
+.input-file__input {
+  display: none;
+}
+/*# sourceMappingURL=index.38e8937e.css.map */
