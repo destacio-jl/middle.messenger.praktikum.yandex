@@ -1,3 +1,5 @@
+import queryStringify from "../utils/queryStringify";
+
 enum METHODS {
   GET = "GET",
   PUT = "PUT",
@@ -12,24 +14,20 @@ type FetchOptions = {
 
 export interface RequestOptions {
   method: METHODS;
+  formData?: boolean;
   data?: { [key: string]: string };
 }
 
-function queryStringify(data: { [key: string]: string }): string {
-  return Object.entries(data).reduce(
-    (query, [key, value]) =>
-      query.length === 1
-        ? `${query}${key}=${value}`
-        : `${query}&${key}=${value}`,
-    `?`
-  );
-}
-
 class HTTPTransport {
+  _host = "/";
+
+  constructor(host = "/") {
+    this._host = host;
+  }
+
   get = (url: string, options: FetchOptions = {}) => {
     const { data } = options;
     const query = data ? queryStringify(data) : ``;
-    console.log(`get`, `${url}${query}`);
     return this.request(
       `${url}${query}`,
       { ...options, method: METHODS.GET },
@@ -38,6 +36,7 @@ class HTTPTransport {
   };
 
   put = (url: string, options: FetchOptions = {}) => {
+    console.log({ options });
     return this.request(
       url,
       { ...options, method: METHODS.PUT },
@@ -62,14 +61,33 @@ class HTTPTransport {
   };
 
   request = (url: string, options: RequestOptions, timeout = 5000) => {
-    const { method, data } = options;
+    const { method, formData, data } = options;
+
+    console.log(options);
+
+    const fullUrl = `${this._host}${url}`;
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      xhr.open(method, url);
 
-      xhr.onload = function () {
-        resolve(xhr);
+      xhr.open(method, fullUrl);
+
+      if (!formData) {
+        xhr.setRequestHeader(`content-type`, `application/json`);
+      }
+
+      xhr.withCredentials = true;
+
+      xhr.onload = () => {
+        const statusCode = Number(xhr.status.toString().charAt(0));
+
+        if (statusCode === 2) {
+          resolve(xhr);
+        }
+
+        if (statusCode === 4 || statusCode === 5) {
+          reject(xhr);
+        }
       };
 
       xhr.onabort = reject;
@@ -80,7 +98,7 @@ class HTTPTransport {
       if (method === METHODS.GET || !data) {
         xhr.send();
       } else {
-        xhr.send(JSON.stringify(data));
+        xhr.send(formData ? data : JSON.stringify(data));
       }
     });
   };

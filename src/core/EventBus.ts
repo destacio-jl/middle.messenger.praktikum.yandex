@@ -1,4 +1,4 @@
-type Callback = (...args: unknown[]) => void;
+import { Callback } from "./types";
 
 export interface IEventBus {
   listeners: {
@@ -28,7 +28,7 @@ class EventBus implements IEventBus {
 
   off(event: string, callback: Callback) {
     if (!this.listeners[event]) {
-      throw new Error(`Нет события: ${event}`);
+      return;
     }
 
     this.listeners[event] = this.listeners[event].filter(
@@ -38,7 +38,7 @@ class EventBus implements IEventBus {
 
   emit(event: string, ...args: unknown[]) {
     if (!this.listeners[event]) {
-      throw new Error(`Нет события: ${event}`);
+      return;
     }
 
     this.listeners[event].forEach((listener) => {

@@ -1,37 +1,10 @@
-import MainPage, { MainPageProps } from "../../views/MainPage";
-import render from "../../utils/render";
-import InputField, { INPUT_FIELD_VARIANTS } from "../../ui/InputField";
+import Store from "../../core/Store";
 import { validateRequired } from "../../utils/validators";
+import MainPage from "../../views/pages/MainPage/MainPage";
+import { MainPageProps } from "../../views/pages/MainPage/types";
+import InputField, { INPUT_FIELD_VARIANTS } from "../../views/ui/InputField";
 
-const chats = [
-  {
-    name: "Андрей",
-    message: "Изображение",
-    time: "10:49",
-    unread: 2,
-  },
-  {
-    name: "Киноклуб",
-    message: "Стикер",
-    time: "12:00",
-    unread: 0,
-    isAuthor: true,
-  },
-  {
-    name: "Илья",
-    message:
-      "Друзья, у меня для вас особенный выпуск новостей! Бла бла бла бла бла бла",
-    time: "10:49",
-    unread: 4,
-  },
-  {
-    name: "Андрей",
-    message: "Круто",
-    time: "Пт",
-    unread: 0,
-    isAuthor: true,
-  },
-];
+const chats = [];
 
 const messages = [
   {
@@ -63,6 +36,8 @@ const messageInputField = new InputField(inputProps, inputSettings);
 const onSubmitHandler = (e: SubmitEvent) => {
   e.preventDefault();
 
+  const { socket } = Store.getState();
+
   const errors = [];
 
   const formData = {
@@ -79,22 +54,24 @@ const onSubmitHandler = (e: SubmitEvent) => {
     });
   }
 
-  console.log(formData);
-  console.log({ errors });
+  if (!errors.length) {
+    socket.send(
+      JSON.stringify({
+        content: formData[`${messageInputField.props.name}`],
+        type: "message",
+      })
+    );
+  }
 };
 
 const props: MainPageProps = {
   chats,
   messageInputField,
-  activeChat: {
-    name: `Вадим`,
-    messages,
-  },
   events: {
     submit: onSubmitHandler,
   },
 };
 
-const loginPage = new MainPage(props);
+const mainPage = new MainPage(props);
 
-render(".app", loginPage);
+export default mainPage;

@@ -1,0 +1,23 @@
+@import "./variables";
+
+.input-file {
+  width: 105px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.input-file__name {
+  font-size: 14px;
+  color: $color-text-grey;
+
+  &.no-file {
+    color: $color-accent;
+    font-size: 12px;
+    line-height: 16px;
+    text-decoration: underline;
+  }
+}
+
+.input-file__input {
+  display: none;
+}

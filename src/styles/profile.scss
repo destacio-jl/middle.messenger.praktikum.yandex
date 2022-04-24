@@ -50,6 +50,10 @@
   height: 130px;
   border-radius: 50%;
   overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  border: 0;
+  cursor: pointer;
 
   input {
     display: none;
@@ -104,7 +108,7 @@
   font-size: 13px;
   line-height: 13px;
   font-weight: 500;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid $color-border-light;
   cursor: pointer;
 
   span {
@@ -137,6 +141,8 @@
 
 .profile__action {
   display: block;
+  border: 0;
+  background: none;
   padding: 10px 0;
   width: 100%;
   font-weight: 500;
@@ -144,6 +150,7 @@
   line-height: 13px;
   border-bottom: 1px solid $color-border-light;
   color: $color-accent;
+  cursor: pointer;
 
   &_danger {
     color: $color-danger;
@@ -172,5 +179,30 @@
 .profile__error {
   margin-top: 5px;
   font-size: 10px;
+  color: $color-error;
+}
+
+.change-avatar {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  *:last-child {
+    margin-bottom: 40px;
+  }
+}
+
+.change-avatar__title {
+  margin-top: 40px;
+  margin-bottom: 43px;
+  font-size: 15px;
+  color: $color-text-main;
+}
+
+.change-avatar__error {
+  margin-top: 14px;
+  font-size: 11px;
   color: $color-error;
 }

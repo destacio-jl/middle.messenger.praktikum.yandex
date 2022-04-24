@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
+    "lib": ["dom"],
     "outDir": "dist",
     "target": "es2016",
     "declaration": false,
-    "module": "commonjs",
-    "strictNullChecks": true,
-    "sourceMap": true
+    "module": "commonjs"
   },
   "noImplicitAny": true,
   "noUnusedLocals": true,
   "noUnusedParameters": true,
   "sourceMap": true,
-  "strictNullChecks": true
+  "strictNullChecks": true,
+  "strict": true
 }

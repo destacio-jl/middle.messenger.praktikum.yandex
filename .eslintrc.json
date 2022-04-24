@@ -3,10 +3,17 @@
     "airbnb-base/legacy",
     "plugin:prettier/recommended",
     "prettier",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
   "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "project": [".tsconfig.json"] ,
+    "sourceType": "module"
+  },
   "plugins": ["html", "hbs", "@typescript-eslint", "prettier"],
   "rules": {
     "no-underscore-dangle": "off",
@@ -14,6 +21,15 @@
     "class-methods-use-this": "off",
     "no-param-reassign": "off",
     "no-shadow": "off",
-    "@typescript-eslint/no-shadow": ["error"]
-  }
+    "@typescript-eslint/no-shadow": ["error"],
+    "no-constructor-return": "off"
+  },
+  "overrides": [
+    {
+      "files": ["*.spec.ts"],
+      "rules": {
+        "no-unused-expressions": "off"
+      }
+    }
+]
 }

@@ -1,6 +1,8 @@
 import EventBus, { IEventBus } from "./EventBus";
 import { v4 as makeUUID } from "uuid";
 import { compile } from "handlebars";
+import { Callback } from "./types";
+import isArray from "../utils/isArray";
 
 type Props = {
   [key: string]: unknown;
@@ -10,6 +12,12 @@ export type BlockSettings = {
   withInternalID?: boolean;
   className?: string | string[];
   attributes?: { [key: string]: string };
+  style?: string;
+};
+
+type Meta = {
+  tagName: string;
+  settings: BlockSettings;
 };
 
 export interface IBlock {
@@ -39,13 +47,13 @@ class Block implements IBlock {
     FLOW_CDU: "flow:component-did-update",
   };
 
-  _element = null;
+  _element: HTMLElement = null;
 
-  _id = null;
+  _id: string = null;
 
-  _meta = null;
+  _meta: Meta = null;
 
-  children: { [key: string]: IBlock } = {};
+  children: { [key: string]: IBlock | IBlock[] } = {};
 
   constructor(
     tagName = "div",
@@ -53,6 +61,7 @@ class Block implements IBlock {
     settings: BlockSettings = {}
   ) {
     const { children, props } = this._getChildren(propsAndChildren);
+
     this.children = children;
 
     const eventBus = new EventBus();
@@ -65,10 +74,12 @@ class Block implements IBlock {
     const { withInternalID } = settings;
 
     if (withInternalID) {
-      this._id = makeUUID();
+      this._id = String(makeUUID());
       this.props = this._makePropsProxy({ ...props, __id: this._id });
+      this.children = this._makePropsProxy({ ...children });
     } else {
       this.props = this._makePropsProxy(props);
+      this.children = this._makePropsProxy({ ...children });
     }
 
     this.eventBus = () => eventBus;
@@ -78,10 +89,16 @@ class Block implements IBlock {
   }
 
   _registerEvents(eventBus: IEventBus) {
-    eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
-    eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
-    eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
-    eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
+    eventBus.on(Block.EVENTS.INIT, this.init.bind(this) as Callback);
+    eventBus.on(
+      Block.EVENTS.FLOW_CDM,
+      this._componentDidMount.bind(this) as Callback
+    );
+    eventBus.on(
+      Block.EVENTS.FLOW_CDU,
+      this._componentDidUpdate.bind(this) as Callback
+    );
+    eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this) as Callback);
   }
 
   _createResources() {
@@ -97,29 +114,40 @@ class Block implements IBlock {
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
+  dispatchComponentDidMount() {
+    this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+  }
+
   _componentDidMount() {
     this.componentDidMount();
 
     Object.values(this.children).forEach((child) => {
-      child.dispatchComponentDidMount();
+      const isBlockArray = isArray(child);
+      if (isBlockArray) {
+        child.forEach((block: IBlock) => {
+          block.dispatchComponentDidMount();
+        });
+      } else {
+        (child as IBlock).dispatchComponentDidMount();
+      }
     });
   }
 
-  // Может переопределять пользователь, необязательно трогать
   componentDidMount(oldProps?: Props) {
-    console.log("did mount, props:", oldProps);
+    // console.log("did mount, props:", oldProps);
   }
 
-  dispatchComponentDidMount() {
-    this._eventBus().emit(Block.EVENTS.FLOW_CDM);
-  }
-
-  _componentDidUpdate(oldProps, newProps) {
+  _componentDidUpdate(oldProps: Props, newProps: Props) {
     const response = this.componentDidUpdate(oldProps, newProps);
+
+    if (!response) {
+      return;
+    }
+
+    this._render();
   }
 
-  // Может переопределять пользователь, необязательно трогать
-  componentDidUpdate(oldProps, newProps) {
+  componentDidUpdate(oldProps: Props, newProps: Props) {
     return true;
   }
 
@@ -128,8 +156,19 @@ class Block implements IBlock {
       return;
     }
 
-    Object.assign(this.props, nextProps);
-    this.eventBus().emit(Block.EVENTS.FLOW_CDU);
+    const oldProps = { ...this.props };
+    const oldChildren = { ...this.children };
+
+    const { children, props } = this._getChildren(nextProps);
+
+    Object.assign(this.props, props);
+    Object.assign(this.children, children);
+
+    this.eventBus().emit(
+      Block.EVENTS.FLOW_CDU,
+      { ...oldProps, ...oldChildren },
+      { ...props, ...children }
+    );
   };
 
   get element() {
@@ -137,6 +176,8 @@ class Block implements IBlock {
   }
 
   _render() {
+    if (!this._element) return;
+
     const block = this.render();
 
     this._removeEvents();
@@ -144,13 +185,12 @@ class Block implements IBlock {
     if (typeof block === "string") {
       this._element.innerHTML = block;
     } else {
-      this._element.appendChild(block.content);
+      this._element.replaceChildren(block.content);
     }
 
     this._addEvents();
   }
 
-  // Может переопределять пользователь, необязательно трогать
   render(): string | HTMLTemplateElement {
     return this.element;
   }
@@ -167,7 +207,7 @@ class Block implements IBlock {
 
     Object.entries(this.children).forEach(([key, child]) => {
       if (Array.isArray(child)) {
-        propsAndStubs[key] = child.reduce((result, block) => {
+        propsAndStubs[key] = child.reduce((result: string, block: Block) => {
           return result + `<div data-id="${block._id}"></div>`;
         }, ``);
       } else {
@@ -182,30 +222,27 @@ class Block implements IBlock {
 
     Object.values(this.children).forEach((child) => {
       if (Array.isArray(child)) {
-        child.forEach((block) => {
+        child.forEach((block: Block) => {
           const stub = fragment.content.querySelector(
             `[data-id="${block._id}"]`
           );
-          stub.replaceWith(block.getContent());
+          if (stub) {
+            stub.replaceWith(block.getContent());
+          }
         });
       } else {
         const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
-        stub.replaceWith(child.getContent());
+        if (stub) {
+          stub.replaceWith(child.getContent());
+        }
       }
     });
 
     return fragment;
   }
 
-  _makePropsProxy(props) {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const self = this;
-    const proxyProps = new Proxy(props, {
-      set(target, prop, value) {
-        target[prop] = value;
-        self._render();
-        return true;
-      },
+  _makePropsProxy(props: Props): Props {
+    const proxyProps = new Proxy<Props>(props, {
       deleteProperty() {
         throw new Error(`Удаление запрещено`);
       },
@@ -215,7 +252,7 @@ class Block implements IBlock {
   }
 
   _createDocumentElement(tagName: string, className?: string) {
-    const { attributes } = this._meta.settings;
+    const { attributes, style } = this._meta.settings;
     const element = document.createElement(tagName);
 
     if (attributes)
@@ -226,10 +263,11 @@ class Block implements IBlock {
     if (className && typeof className === "string")
       element.classList.add(className);
     if (Array.isArray(className))
-      className.forEach((cl) => {
+      className.forEach((cl: string) => {
         element.classList.add(cl);
       });
     if (this._id) element.setAttribute("data-id", this._id);
+    if (style) element.style.cssText = style;
     return element;
   }
 
@@ -237,7 +275,11 @@ class Block implements IBlock {
     const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {
-      this._element.addEventListener(eventName, events[eventName], true);
+      this._element?.addEventListener(
+        eventName,
+        events[eventName] as EventListenerOrEventListenerObject,
+        true
+      );
     });
   }
 
@@ -245,7 +287,10 @@ class Block implements IBlock {
     const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {
-      this._element.removeEventListener(eventName, events[eventName]);
+      this._element?.removeEventListener(
+        eventName,
+        events[eventName] as EventListenerOrEventListenerObject
+      );
     });
   }
 
@@ -268,12 +313,9 @@ class Block implements IBlock {
     return { children, props };
   }
 
-  show() {
-    this.getContent().style.display = "block";
-  }
-
-  hide() {
-    this.getContent().style.display = "none";
+  unmount() {
+    this._removeEvents();
+    this.getContent().remove();
   }
 }
 
