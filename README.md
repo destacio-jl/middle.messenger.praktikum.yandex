@@ -1,1 +1,1 @@
-https://practical-engelbart-e1f1fb.netlify.app
+https://github.com/destacio-jl/middle.messenger.praktikum.yandex/pull/3
