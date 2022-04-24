@@ -1,6 +1,6 @@
 import Store from "../../core/Store";
 import { Callback, Response } from "../../core/types";
-import UserAPI, { UpdateAvatarData } from "../../api/UserApi";
+import UserAPI, { UpdateAvatarData } from "../../api/UserAPI";
 import { User } from "../../api/AuthAPI";
 
 const updateAvatar = (
