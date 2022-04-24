@@ -1,5 +1,5 @@
 import { Callback } from "../../core/types";
-import UserAPI, { UpdateUserProfileData } from "../../api/UserApi";
+import UserAPI, { UpdateUserProfileData } from "../../api/UserAPI";
 
 const updateUserPassword = (
   formData: UpdateUserProfileData,
